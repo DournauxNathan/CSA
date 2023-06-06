@@ -3,6 +3,12 @@ using System.Linq;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour, IPlayerController {
+
+    public bool canMove = true;
+    public SpriteRenderer sprite;
+    public LayerMask _interactable;
+    public Material defaultColor;
+
     // Public for external hooks
     public Vector3 Velocity { get; private set; }
     public FrameInput Input { get; private set; }
@@ -13,14 +19,18 @@ public class PlayerController : MonoBehaviour, IPlayerController {
 
     private Vector3 _lastPosition;
     private float _currentHorizontalSpeed, _currentVerticalSpeed;
-
-    public bool canMove = true;
-
+       
+     
     // This is horrible, but for some reason colliders are not fully established when update starts...
     private bool _active;
     void Awake() => Invoke(nameof(Activate), 0.5f);
     void Activate() =>  _active = true;
-        
+
+    private void Start()
+    {
+        ResetCamouflage();
+    }
+
     private void Update() {
         if(!_active) return;
 
@@ -42,7 +52,7 @@ public class PlayerController : MonoBehaviour, IPlayerController {
             MoveCharacter(); // Actually perform the axis movement
         }
 
-        Debug.Log(_currentVerticalSpeed);
+        //Debug.Log(_currentVerticalSpeed);
     }
 
 
@@ -159,7 +169,6 @@ public class PlayerController : MonoBehaviour, IPlayerController {
     }
 
     #endregion
-
 
     #region Walk
 
@@ -314,4 +323,15 @@ public class PlayerController : MonoBehaviour, IPlayerController {
     }
 
     #endregion
+    
+    public void ResetCamouflage()
+    {
+        sprite.color = defaultColor.color;
+    }
+    
+    public void SetNewCamouflage(Color color)
+    {
+        sprite.color = color;
+    }
+
 }
