@@ -11,14 +11,19 @@ public class PlayerAim : MonoBehaviour
     public Transform startPoint;
     public Transform endPoint;
     public Transform interactor;
+    private Vector3 interactorStartPos;
+
+    public LayerMask _interactable;
 
     public float startOffset;
     public float endOffset;
     public float shootingSpeed;
 
     public bool isAimMode = false;
+    public bool isTargetLocked = false;
+
     public bool isShooting = false;
-    public bool isObjectBetweenPoints = false;
+    private bool GoBack;
 
     private float time;
     private Vector3 _crosshairPos;
@@ -39,19 +44,21 @@ public class PlayerAim : MonoBehaviour
 
         interactor.gameObject.SetActive(false);
         interactor.transform.position = startPoint.position;
+
+        interactorStartPos = interactor.position;
     }
 
     // Update is called once per frame
     void Update()
     {
         Aim();
-
+                
         if (target != null)
         {
             Shoot();
         }
 
-        if (isAimMode && controller.Input.Shoot)
+        if (isAimMode && controller.Input.Shoot && !GoBack && !isShooting)
         {
             isShooting = true;
         }
@@ -71,12 +78,12 @@ public class PlayerAim : MonoBehaviour
             Vector3 aim = new Vector3(horizontalAxis, verticalAxis,0).normalized;
             Vector3 aim2 = new Vector3(horizontalAxis, verticalAxis, 0).normalized;
 
-            if (!isShooting)
+            if (!isShooting && !GoBack)
             {
                 interactor.transform.position = startPoint.position;
             }
 
-            if (aim.magnitude > 0f && isObjectBetweenPoints)
+            if (aim.magnitude > 0f && isTargetLocked)
             {
                 endPoint.transform.position = target.position;
 
@@ -116,39 +123,76 @@ public class PlayerAim : MonoBehaviour
             target = null;
             
             isAimMode = false;
-            isObjectBetweenPoints = false;
+            isTargetLocked = false;
+
+            isShooting = false;
+            GoBack = false;
         }
     }
 
     private void Shoot()
     {
-        if (isShooting)
+        if (isShooting && !GoBack)
         {
-            interactor.position = Vector3.MoveTowards(interactor.position, target.position, shootingSpeed * Time.deltaTime);
-            Debug.Log("Shoot");
+            interactor.position = Vector3.MoveTowards(interactor.position, endPoint.position, shootingSpeed * Time.deltaTime);            
+            DetectAt(interactor.position, .25f, _interactable);
+        }
+        
+        if (GoBack && !isShooting)
+        {
+           interactor.position = Vector3.MoveTowards(interactor.position, startPoint.position, shootingSpeed * Time.deltaTime);
 
+            if (interactor.position == startPoint.position)
+            {
+                GoBack = false;
+            }
         }
     }
 
 
+    private bool DetectAt(Vector3 origin, float radius, LayerMask mask)
+    {
+        var hitCollider = Physics2D.OverlapCircle(origin, radius, _interactable);
+
+        if (hitCollider != null)
+        {
+            GoBack = true;
+            isShooting = false;
+
+            CheckInteractable(hitCollider);
+        }
+        return hitCollider != null;
+    }
+
+    private bool CheckInteractable(Collider2D _col)
+    {
+        var interactable = _col.GetComponent<IInteractable>();
+
+        if (interactable != null)
+        {
+            interactable.Interact();
+            return true;
+        }
+        return false;
+    }
+    
     private bool DetectBetweenEndPoint(Vector3 origin, Vector3 direction)
     {
         if (Vector3.Distance(startPoint.position, endPoint.position) < maxRange)
         {
-            RaycastHit2D hit = Physics2D.Raycast(origin, direction, maxRange, controller._interactable);
+            RaycastHit2D hit = Physics2D.Raycast(origin, direction, maxRange, _interactable);
             {
                 Debug.DrawRay(origin, direction, Color.red);
 
                 //If something was hit.
                 if (hit.collider != null)
                 {
-                    target = hit.transform;
-                    interactor.transform.position = startPoint.position;
-                    return isObjectBetweenPoints = true;
+                    LockTarget(hit.transform);
+                    return isTargetLocked = true;
                 }
             }
         }
-        return isObjectBetweenPoints = false;
+        return isTargetLocked = false;
     }
 
     private void DrawAimLine(Vector3 endPos)
@@ -162,7 +206,7 @@ public class PlayerAim : MonoBehaviour
         _startPos.z = 0;
         lr.SetPosition(0, _startPos);
 
-        if (!isObjectBetweenPoints)
+        if (!isTargetLocked)
         {            
             _endPos = endPos;
             _endPos.z = 0;
@@ -205,10 +249,11 @@ public class PlayerAim : MonoBehaviour
         return Mathf.Clamp(Vector2.Distance(_startPos, _endPos), 0, Vector2.Distance(_startPos, _endPos));
     }
 
-    public void LockTarget()
+    public void LockTarget(Transform _transform)
     {
         //Update the endPos
-
+        target = _transform;
+        //interactor.transform.position = startPoint.position;
     }
 
     public void SubscribeTargetInfo(Transform _target)

@@ -6,7 +6,6 @@ public class PlayerController : MonoBehaviour, IPlayerController {
 
     public bool canMove = true;
     public SpriteRenderer sprite;
-    public LayerMask _interactable;
     public Material defaultColor;
 
     // Public for external hooks

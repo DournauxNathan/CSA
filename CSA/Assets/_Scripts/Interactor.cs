@@ -2,26 +2,24 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Interactor : Detection
+public class Interactor : MonoBehaviour
 {
-
     [SerializeField] private PlayerAim crosshair;
+    [SerializeField] private Transform hitCollider;
 
-    private void Update()
-    {
-        
-    }
+    private Vector3 _startPos;
 
-    public override void Detect()
+    private void Start()
     {
-        
+        _startPos = transform.position;
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("interactable"); 
-        
+        Debug.Log("interactable");
+
         var interactable = other.GetComponent<IInteractable>();
+        hitCollider = other.transform;
 
         if (interactable != null)
         {
@@ -29,7 +27,7 @@ public class Interactor : Detection
             crosshair.isShooting = false;
 
 
-            interactable.Interact(this);
+            interactable.Interact();
 
         }
     }
