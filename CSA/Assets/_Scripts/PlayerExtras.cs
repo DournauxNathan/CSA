@@ -7,6 +7,7 @@ public struct FrameInput {
     public float X,Y;
     public bool JumpDown;
     public bool JumpUp;
+    public bool Interact;
     public bool AimMode;
     public bool Cancel;
     public bool Shoot;

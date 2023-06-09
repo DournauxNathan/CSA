@@ -65,8 +65,9 @@ public class PlayerController : MonoBehaviour, IPlayerController {
             JumpDown = UnityEngine.Input.GetButtonDown("Jump"),
             JumpUp = UnityEngine.Input.GetButtonUp("Jump"),
             X = UnityEngine.Input.GetAxisRaw("Horizontal"),
+            Interact = UnityEngine.Input.GetButtonDown("Interact"),
             AimMode = UnityEngine.Input.GetButtonDown("AimMode"),
-            //Shoot = UnityEngine.Input.GetButtonDown("Shoot"),
+            Shoot = UnityEngine.Input.GetButtonDown("Shoot"),
             Cancel = UnityEngine.Input.GetButtonDown("Cancel")
         };
         if (Input.JumpDown)
@@ -76,7 +77,12 @@ public class PlayerController : MonoBehaviour, IPlayerController {
 
         if (Input.AimMode && _currentVerticalSpeed == 0)
         {
-            canMove = false;
+            canMove = false;    
+        }
+        
+        if (Input.Interact)
+        {
+            //Debug.Log("Interact");
         }
 
         if (!canMove && Input.Cancel)

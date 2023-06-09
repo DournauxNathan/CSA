@@ -6,23 +6,27 @@ using UnityEngine;
 public class PlayerAim : MonoBehaviour
 {
     private PlayerController controller;
+    public Transform crosshair;
+    [SerializeField] private LineRenderer lr;
+    public Transform startPoint;
+    public Transform endPoint;
+    public Transform interactor;
+
+    public float startOffset;
+    public float endOffset;
+    public float shootingSpeed;
+
     public bool isAimMode = false;
+    public bool isShooting = false;
     public bool isObjectBetweenPoints = false;
 
-    public Transform startPoint;
-    public float startOffset;
-    public Transform endPoint;
-    public float endOffset;
-    public Transform crosshair;
+    private float time;
     private Vector3 _crosshairPos;
-
     private Vector3 startPos;
-    [SerializeField] private LineRenderer lr;
     private Vector3 _startPos;
     private Vector3 _endPos;
-    private Vector3 _direction;
 
-    private Transform target;
+    public Transform target;
     [SerializeField] private float maxRange;
 
     // Start is called before the first frame update
@@ -30,43 +34,65 @@ public class PlayerAim : MonoBehaviour
     {
         controller = GetComponent<PlayerController>();
         crosshair.gameObject.SetActive(false);
+        endPoint.gameObject.SetActive(false);
         startPos = transform.position;
+
+        interactor.gameObject.SetActive(false);
+        interactor.transform.position = startPoint.position;
     }
 
     // Update is called once per frame
     void Update()
     {
         Aim();
-        
+
+        if (target != null)
+        {
+            Shoot();
+        }
+
+        if (isAimMode && controller.Input.Shoot)
+        {
+            isShooting = true;
+        }
     }
+
 
     private void Aim()
     {
         if (!controller.canMove)
         {
             isAimMode = true;
+            endPoint.gameObject.SetActive(true);
+
             float horizontalAxis = Input.GetAxis("Horizontal");
             float verticalAxis = Input.GetAxis("Vertical");
             verticalAxis = Mathf.Clamp(verticalAxis, 0f, 1f);
             Vector3 aim = new Vector3(horizontalAxis, verticalAxis,0).normalized;
             Vector3 aim2 = new Vector3(horizontalAxis, verticalAxis, 0).normalized;
 
+            if (!isShooting)
+            {
+                interactor.transform.position = startPoint.position;
+            }
+
             if (aim.magnitude > 0f && isObjectBetweenPoints)
             {
-                endPoint.transform.localPosition = target.localPosition;
+                endPoint.transform.position = target.position;
 
                 DrawAimLine(endPoint.position);
             }
             else if (aim.magnitude > 0f)
             {
                 aim *= startOffset;
-                startPoint.transform.localPosition = aim2;
+                startPoint.transform.localPosition = aim2 ;
 
                 aim *= endOffset;
                 endPoint.transform.localPosition = aim;
 
                 DrawAimLine(endPoint.position);
             }
+
 
             /*if (angle.z > 90 && angle.z < 200 )
             {
@@ -82,14 +108,28 @@ public class PlayerAim : MonoBehaviour
         }
         else
         {
-            isAimMode = false;
-            endPoint.transform.localPosition = startPos;
-            lr.enabled = false;
-            isObjectBetweenPoints = false;
             crosshair.gameObject.SetActive(false);
+            interactor.gameObject.SetActive(false);
+            endPoint.gameObject.SetActive(false);
+            
+            lr.enabled = false;
             target = null;
+            
+            isAimMode = false;
+            isObjectBetweenPoints = false;
         }
     }
+
+    private void Shoot()
+    {
+        if (isShooting)
+        {
+            interactor.position = Vector3.MoveTowards(interactor.position, target.position, shootingSpeed * Time.deltaTime);
+            Debug.Log("Shoot");
+
+        }
+    }
+
 
     private bool DetectBetweenEndPoint(Vector3 origin, Vector3 direction)
     {
@@ -103,6 +143,7 @@ public class PlayerAim : MonoBehaviour
                 if (hit.collider != null)
                 {
                     target = hit.transform;
+                    interactor.transform.position = startPoint.position;
                     return isObjectBetweenPoints = true;
                 }
             }
@@ -113,12 +154,10 @@ public class PlayerAim : MonoBehaviour
     private void DrawAimLine(Vector3 endPos)
     {
         lr.enabled = true;
+
+        interactor.gameObject.SetActive(true);
         crosshair.gameObject.SetActive(true);
-
-        _direction = endPoint.position - startPoint.position;
-        _direction.z = 0;
-        _direction.Normalize();
-
+              
         _startPos = startPoint.position;
         _startPos.z = 0;
         lr.SetPosition(0, _startPos);
@@ -129,15 +168,14 @@ public class PlayerAim : MonoBehaviour
             _endPos.z = 0;
 
             //change the length of the line renderer
-            float lineLength = Mathf.Clamp(Vector2.Distance(_startPos, _endPos), 0, Vector2.Distance(_startPos, _endPos));
-            _endPos = _startPos + (_direction * lineLength);
+            _endPos = _startPos + (CalculateDirection(_startPos, _endPos) * CalculateLineLength(_startPos, _endPos));
             lr.SetPosition(1, _endPos);
 
-            DetectBetweenEndPoint(_startPos, (_direction * lineLength));
+            DetectBetweenEndPoint(_startPos, (CalculateDirection(_startPos, _endPos) * CalculateLineLength(_startPos, _endPos)));
 
             _crosshairPos = Camera.main.WorldToScreenPoint(_endPos);
             _crosshairPos.z = Camera.main.transform.position.z + Camera.main.nearClipPlane;
-            crosshair.position = _crosshairPos;
+            crosshair.position = _crosshairPos;          
         }
         else
         {
@@ -145,15 +183,26 @@ public class PlayerAim : MonoBehaviour
             _endPos.z = 0;
 
             //change the length of the line renderer
-            float lineLength = Mathf.Clamp(Vector2.Distance(_startPos, _endPos), 0, Vector2.Distance(_startPos, _endPos));
-            _endPos = _startPos + (_direction * lineLength);
-            lr.SetPosition(1, target.localPosition);
+            _endPos = _startPos + (CalculateDirection(_startPos, _endPos) * CalculateLineLength(_startPos, _endPos));
+            lr.SetPosition(1, target.position);
 
-            _crosshairPos = Camera.main.WorldToScreenPoint(target.localPosition);
+            _crosshairPos = Camera.main.WorldToScreenPoint(target.position);
             _crosshairPos.z = Camera.main.transform.position.z + Camera.main.nearClipPlane;
             crosshair.position = _crosshairPos;
-        }
-        
+        }        
+    }
+
+    public Vector3 CalculateDirection(Vector3 _start, Vector3 _end)
+    {
+        Vector3 _direction = _end - _start;
+        _direction.z = 0;
+        _direction.Normalize();
+        return _direction;
+    }
+
+    public float CalculateLineLength(Vector3 _startPos, Vector3 _endPos)
+    {
+        return Mathf.Clamp(Vector2.Distance(_startPos, _endPos), 0, Vector2.Distance(_startPos, _endPos));
     }
 
     public void LockTarget()
@@ -162,7 +211,7 @@ public class PlayerAim : MonoBehaviour
 
     }
 
-    public void GetTargetInfo(Transform _target)
+    public void SubscribeTargetInfo(Transform _target)
     {
         target = _target;
     }
