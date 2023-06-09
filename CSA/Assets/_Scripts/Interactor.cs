@@ -16,7 +16,7 @@ public class Interactor : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("interactable");
+        Debug.Log("");
 
         var interactable = other.GetComponent<IInteractable>();
         hitCollider = other.transform;
