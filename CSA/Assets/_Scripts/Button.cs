@@ -2,13 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Button : MonoBehaviour, IInteractable
+public class Button : Interatable, IInteractable
 {
-    public string InteractionPrompt => throw new System.NotImplementedException();
-
-    public bool isActive { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
-    public float coolDown { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
-
     public void Activate()
     {
         throw new System.NotImplementedException();
@@ -19,9 +14,9 @@ public class Button : MonoBehaviour, IInteractable
         throw new System.NotImplementedException();
     }
 
-    public bool Interact(bool isActive)
+    public void Interact()
     {
-        throw new System.NotImplementedException();
+        onActivate?.Invoke();
     }
 
     public void Timer()
@@ -31,6 +26,8 @@ public class Button : MonoBehaviour, IInteractable
 
     public void Toogle()
     {
+        isActive = !isActive;
+
         throw new System.NotImplementedException();
     }
 }

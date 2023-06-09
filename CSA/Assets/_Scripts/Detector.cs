@@ -2,26 +2,26 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Detector : Detection
+public class Detector : MonoBehaviour
 {
     [Header("")]
     [SerializeField] private PlayerAim crosshair;
 
-   
-    // Update is called once per frame
-    void Update()
+    [SerializeField] private Transform hitCollider;
+
+    private Vector3 _startPos;
+
+    private void Start()
     {
-        if (crosshair.isAimMode)
-        {
-            Detect();   
-        }
+        _startPos = transform.position;
     }
 
-    public override void Detect()
+    private void OnTriggerEnter(Collider other)
     {
+        hitCollider = other.transform;
+        Debug.Log(other.name);
 
-        Debug.Log(GetHitInfo().name);
-        crosshair.SubscribeTargetInfo(GetHitInfo().transform);
+        crosshair.SubscribeTargetInfo(other.transform);
     }  
 
 
