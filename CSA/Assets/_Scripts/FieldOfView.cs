@@ -4,12 +4,15 @@ using UnityEngine;
 
 public class FieldOfView : MonoBehaviour
 {
+    public Transform sprite;
     public float radius;
     [Range(1, 360)] public float angle;
     public LayerMask targetMask;
     public LayerMask obstuctionLayer;
 
     private Transform target;
+
+    private bool isPaused;
 
     public bool canSeePlayer { get; private set; }
 
@@ -23,7 +26,7 @@ public class FieldOfView : MonoBehaviour
     {
         WaitForSeconds wait = new WaitForSeconds(0.2f);
 
-        while (true)
+        while (!isPaused)
         {
             yield return wait;
             FOV();
@@ -32,26 +35,30 @@ public class FieldOfView : MonoBehaviour
 
     private void FOV()
     {
-        Collider2D rangeCheck = Physics2D.OverlapCircle(transform.position, radius, targetMask);
+        Collider2D rangeCheck = Physics2D.OverlapCircle(sprite.position, radius, targetMask);
 
         if (rangeCheck != null)
         {
             target = rangeCheck.transform;
-            Vector2 directionTarget = (target.position - transform.position).normalized;
-            
-            if (Vector2.Angle(transform.forward, directionTarget) < angle / 2f)
-            {
-                float distance = Vector2.Distance(transform.position, target.position);
+            Vector2 directionToTarget = (target.position - sprite.position).normalized;
 
-                if (!Physics2D.Raycast(transform.position, target.position, distance, obstuctionLayer))
+            if (Vector2.Angle(sprite.rotation.y == 180 ? -sprite.right : sprite.right, directionToTarget) < angle / 2)
+            {
+                float distance = Vector2.Distance(sprite.position, target.position);
+
+                if (!Physics2D.Raycast(sprite.position, directionToTarget, distance, obstuctionLayer))
                 {
                     canSeePlayer = true;
                 }
                 else
+                {
+                    target = null;
                     canSeePlayer = false;
+                }
             }
             else
             {
+                target = null;
                 canSeePlayer = false;
             }
         }
@@ -63,30 +70,45 @@ public class FieldOfView : MonoBehaviour
 
     }
 
+    public bool IsPlayerDetected()
+    {
+        return canSeePlayer;
+    }
+
     private void OnDrawGizmos()
     {
+        UnityEditor.Handles.color = Color.white;
+
+        Vector3 angleA = DirectionFromAngle(-angle / 2);
+        Vector3 angleB = DirectionFromAngle(angle / 2);
+
+        UnityEditor.Handles.DrawWireArc(sprite.position, Vector3.forward, angleA, angle, radius, 2f);
+
         Gizmos.color = Color.red;
-        UnityEditor.Handles.DrawWireDisc(transform.position, Vector3.forward, radius);
-
-        Vector3 angleA = DirectionFromAngle(-transform.eulerAngles.z, -angle / 2);
-        Vector3 angleB = DirectionFromAngle(-transform.eulerAngles.z, angle / 2);
-
-        Gizmos.color = Color.black;
-        Gizmos.DrawLine(transform.position, transform.position + angleA * radius);
-        Gizmos.DrawLine(transform.position, transform.position + angleB * radius);
+        Gizmos.DrawLine(sprite.position, sprite.position + angleA * radius);
+        Gizmos.DrawLine(sprite.position, sprite.position + angleB * radius);
 
         if (canSeePlayer)
         {
             Gizmos.color = Color.blue;
-            Gizmos.DrawLine(transform.position, target.position);
+            Gizmos.DrawLine(sprite.position, target.position);
         }
 
     }
 
-    private Vector2 DirectionFromAngle(float eulerY, float angleInDeg)
+    public void Pause(bool value)
     {
-        angleInDeg += eulerY;
-        return new Vector2(Mathf.Sin(angleInDeg * Mathf.Deg2Rad), Mathf.Cos(angleInDeg * Mathf.Deg2Rad));
+        isPaused = value;
+
+        if (!isPaused)
+        {
+            StartCoroutine(FOVCheck());
+        }
+    }
+
+    private Vector2 DirectionFromAngle(float angleInDegrees)
+    {
+        return (Vector2)(Quaternion.Euler(0, 0, angleInDegrees) * (sprite.rotation.y == 180 ? -sprite.right : sprite.right));
     }
 
     public Vector3 GetVectorFromAngles(float angle)

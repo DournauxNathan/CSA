@@ -5,6 +5,20 @@ using UnityEngine;
 public class SecurityCamera : Interatable, IInteractable
 {
     [SerializeField] private FieldOfView fov;
+    [SerializeField] private Animator _anim;
+
+    private void Start()
+    {
+        Reset();
+    }
+
+    private void Update()
+    {
+        if (fov.IsPlayerDetected())
+        {
+            Debug.LogWarning("Player is detected !");
+        }
+    }
 
     public void Activate()
     {
@@ -18,7 +32,7 @@ public class SecurityCamera : Interatable, IInteractable
 
     public void Interact()
     {
-        throw new System.NotImplementedException();
+        Toogle();
     }
 
     public void Timer()
@@ -28,19 +42,21 @@ public class SecurityCamera : Interatable, IInteractable
 
     public void Toogle()
     {
-        throw new System.NotImplementedException();
-    }
+        if (isActive)
+        {
+            isActive = false;
+            _anim.enabled = false;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-
-    // Update is called once per frame
-    void Update()
-    {
+            StartCoroutine(DecreaseTimer());
+            onDeactivate?.Invoke();
+        }
+        else if (!isActive)
+        {
+            isActive = true;
+            _anim.enabled = true;
+            onActivate?.Invoke();
+            coolDown = resetTimer;
+        }
 
     }
 }

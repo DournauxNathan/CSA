@@ -4,18 +4,6 @@ using UnityEngine;
 
 public class Lever : Interatable, IInteractable
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public void Activate()
     {
         throw new System.NotImplementedException();
@@ -28,8 +16,7 @@ public class Lever : Interatable, IInteractable
 
     public void Interact()
     {
-        Toogle();
-        isActive = true;
+        onInteract?.Invoke();
     }
 
     public void Timer()

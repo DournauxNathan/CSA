@@ -4,19 +4,15 @@ using UnityEngine;
 
 public class CoverUp : MonoBehaviour
 {
-    public bool isPlayerDetected = true;
     public Material aspect;
 
-    private void Update()
-    {
-        
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerStay2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
         {
-            isPlayerDetected = false;
+            collision.enabled = false;
+            Debug.Log(collision.enabled);
+
             collision.GetComponent<PlayerController>().SetNewCamouflage(aspect.color);
         }
     }
@@ -25,7 +21,8 @@ public class CoverUp : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            isPlayerDetected = true;
+            Debug.Log("Exit");
+            collision.GetComponent<BoxCollider2D>().enabled = true;
             collision.GetComponent<PlayerController>().ResetCamouflage();
         }
     }
