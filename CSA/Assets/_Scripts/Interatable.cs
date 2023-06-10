@@ -8,8 +8,9 @@ public class Interatable : MonoBehaviour
 {
     public bool isActive;
     public float coolDown;
+    public float resetTimer { get; private set; }
 
-    public UnityEvent onActivate, onDeactivate, onToggle;
+    public UnityEvent onInteract, onActivate, onDeactivate, onToggle, onTimerEnd;
 
     // Start is called before the first frame update
     void Start()
@@ -17,9 +18,29 @@ public class Interatable : MonoBehaviour
         
     }
 
-    // Update is called once per frame
-    void Update()
+    public void Reset()
     {
-        
+        resetTimer = coolDown;
+    }
+
+    public IEnumerator DecreaseTimer()
+    {
+        while (true)
+        {
+            yield return null;
+
+            coolDown -= Time.deltaTime;
+
+            if (coolDown <= 0)
+            {
+                onTimerEnd?.Invoke();
+                yield break;
+            }
+        }
+    }
+
+    public void StopTimer()
+    {
+        StopCoroutine(DecreaseTimer());
     }
 }

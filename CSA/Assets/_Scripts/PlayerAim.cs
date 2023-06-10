@@ -149,7 +149,6 @@ public class PlayerAim : MonoBehaviour
         }
     }
 
-
     private bool DetectAt(Vector3 origin, float radius, LayerMask mask)
     {
         var hitCollider = Physics2D.OverlapCircle(origin, radius, _interactable);
