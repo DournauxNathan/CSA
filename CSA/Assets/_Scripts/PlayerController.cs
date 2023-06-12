@@ -353,12 +353,14 @@ public class PlayerController : MonoBehaviour, IPlayerController {
     public void ResetCamouflage()
     {
         sprite.color = defaultColor.color;
+        GetComponent<BoxCollider2D>().enabled = true;
     }
-    
+
 
     public void SetNewCamouflage(Color color)
     {
         sprite.color = color;
+        GetComponent<BoxCollider2D>().enabled = false;
     }
 
     private void OnDrawGizmosSelected()

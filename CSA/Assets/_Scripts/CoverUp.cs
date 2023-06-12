@@ -5,23 +5,25 @@ using UnityEngine;
 public class CoverUp : MonoBehaviour
 {
     public Material aspect;
+    public bool isEnter;
+    private PlayerController player;
 
     private void OnTriggerStay2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
         {
-            collision.enabled = false;
-
-            collision.GetComponent<PlayerController>().SetNewCamouflage(aspect.color);
+            isEnter = true;
+            player = collision.GetComponent<PlayerController>();
+            player.SetNewCamouflage(aspect.color);
         }
     }
 
-    private void OnTriggerExit2D(Collider2D collision)
+    private void FixedUpdate()
     {
-        if (collision.CompareTag("Player"))
+        if (isEnter && Vector2.Distance(player.transform.position, this.transform.position) > 2f)
         {
-            collision.GetComponent<BoxCollider2D>().enabled = true;
-            collision.GetComponent<PlayerController>().ResetCamouflage();
+            isEnter = false;
+            player.ResetCamouflage();
         }
     }
 }
