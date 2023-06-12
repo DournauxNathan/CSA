@@ -4,19 +4,13 @@ using UnityEngine;
 
 using UnityEngine.Events;
 
-public class Interatable : MonoBehaviour
+public class Interactable : MonoBehaviour
 {
     public bool isActive;
     public float coolDown;
     public float resetTimer { get; private set; }
 
     public UnityEvent onInteract, onActivate, onDeactivate, onToggle, onTimerEnd;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
     public void Reset()
     {
@@ -43,4 +37,5 @@ public class Interatable : MonoBehaviour
     {
         StopCoroutine(DecreaseTimer());
     }
+
 }

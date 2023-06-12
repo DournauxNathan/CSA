@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SecurityCamera : Interatable, IInteractable
+public class SecurityCamera : Interactable, IInteractable
 {
     [SerializeField] private FieldOfView fov;
     [SerializeField] private Animator _anim;

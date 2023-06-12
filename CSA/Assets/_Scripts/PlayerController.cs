@@ -7,6 +7,9 @@ public class PlayerController : MonoBehaviour, IPlayerController {
     public bool canMove = true;
     public SpriteRenderer sprite;
     public Material defaultColor;
+    public LayerMask interactable;
+
+    public Inventory inventory;
 
     // Public for external hooks
     public Vector3 Velocity { get; private set; }
@@ -18,26 +21,27 @@ public class PlayerController : MonoBehaviour, IPlayerController {
 
     private Vector3 _lastPosition;
     private float _currentHorizontalSpeed, _currentVerticalSpeed;
-       
-     
+          
     // This is horrible, but for some reason colliders are not fully established when update starts...
     private bool _active;
-    void Awake() => Invoke(nameof(Activate), 0.5f);
+    void Awake() 
+    {
+        Invoke(nameof(Activate), 0.5f);
+        ResetCamouflage();
+        inventory = new Inventory();
+    } 
+
     void Activate() =>  _active = true;
 
-    private void Start()
+    private void Update()
     {
-        ResetCamouflage();
-    }
-
-    private void Update() {
-        if(!_active) return;
+        if (!_active) return;
 
         // Calculate velocity
         Velocity = (transform.position - _lastPosition) / Time.deltaTime;
         _lastPosition = transform.position;
         RunCollisionChecks();
-        
+
         GatherInput();
 
         CalculateWalk(); // Horizontal movement
@@ -46,14 +50,18 @@ public class PlayerController : MonoBehaviour, IPlayerController {
         CalculateJumpApex(); // Affects fall speed, so calculate before gravity
 
         if (canMove)
-        {            
-            
+        {
             MoveCharacter(); // Actually perform the axis movement
         }
-
-        //Debug.Log(_currentVerticalSpeed);
     }
 
+    public void CheckInteractable(IInteractable _interactable)
+    {
+        if (_interactable != null)
+        {
+            _interactable.Interact();
+        }
+    }
 
     #region Gather Input
 
@@ -78,10 +86,23 @@ public class PlayerController : MonoBehaviour, IPlayerController {
         {
             canMove = false;    
         }
+
+        var hitCollider = Physics2D.OverlapCircle(this.transform.position, 1f, interactable);
         
-        if (Input.Interact)
+        if (Input.Interact && canMove && hitCollider != null)
         {
-            //Debug.Log("Interact");
+            var interactable = hitCollider.GetComponent<IInteractable>();
+            var collectable = hitCollider.GetComponent<ICollectable>();
+
+            if (interactable != null)
+            {
+                CheckInteractable(interactable);
+            }
+
+            if (collectable != null)
+            {
+                collectable.Collect(inventory);
+            }
         }
 
         if (!canMove && Input.Cancel)
@@ -334,9 +355,16 @@ public class PlayerController : MonoBehaviour, IPlayerController {
         sprite.color = defaultColor.color;
     }
     
+
     public void SetNewCamouflage(Color color)
     {
         sprite.color = color;
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position, 1f);
     }
 
 }

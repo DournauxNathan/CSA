@@ -24,7 +24,6 @@ public class Elevator : MonoBehaviour
 
     public void CallElevator()
     {
-        Debug.Log("");
         _isCalledToPanel = !_isCalledToPanel;
     }
 

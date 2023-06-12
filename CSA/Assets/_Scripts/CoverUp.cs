@@ -11,7 +11,6 @@ public class CoverUp : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             collision.enabled = false;
-            Debug.Log(collision.enabled);
 
             collision.GetComponent<PlayerController>().SetNewCamouflage(aspect.color);
         }
@@ -21,7 +20,6 @@ public class CoverUp : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            Debug.Log("Exit");
             collision.GetComponent<BoxCollider2D>().enabled = true;
             collision.GetComponent<PlayerController>().ResetCamouflage();
         }
