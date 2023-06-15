@@ -28,6 +28,11 @@ public class Door : MonoBehaviour
         else
         {
             Debug.LogWarning("Item not found");
+            if (!isActive && !itemNeeded)
+            {
+                isActive = true;
+                _anim.SetTrigger("Open");
+            }
         }
         
     }
