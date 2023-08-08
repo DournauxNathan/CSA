@@ -11,6 +11,7 @@ public class GameManager : Singleton<GameManager>
     private void Start()
     {
         DontDestroyOnLoad(this.gameObject);
+
     }
 
     public void LoadLevel()
@@ -43,4 +44,12 @@ public class GameManager : Singleton<GameManager>
     }
 
 
+    public void RestartLevel()
+    {
+#if UNITY_EDITOR
+        levelToLoad = SceneManager.GetActiveScene().buildIndex;
+#endif
+        // Reload the currently active scene.
+        SceneManager.LoadScene(levelToLoad);
+    }
 }

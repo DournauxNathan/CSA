@@ -12,11 +12,11 @@ public class SecurityCamera : Interactable, IInteractable
         Reset();
     }
 
-    private void Update()
+    private void LateUpdate()
     {
         if (fov.IsPlayerDetected())
         {
-            Debug.LogWarning("Player is detected !");
+            GameManager.Instance.RestartLevel();
         }
     }
 

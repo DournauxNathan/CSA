@@ -75,6 +75,8 @@ public class FieldOfView : MonoBehaviour
         return canSeePlayer;
     }
 
+#if UNITY_EDITOR
+
     private void OnDrawGizmos()
     {
         UnityEditor.Handles.color = Color.white;
@@ -95,6 +97,7 @@ public class FieldOfView : MonoBehaviour
         }
 
     }
+#endif
 
     public void Pause(bool value)
     {

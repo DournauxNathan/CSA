@@ -28,6 +28,11 @@ public class Laser : MonoBehaviour
             if (hit.collider)
             {
                 Draw2DRay(_transform.position, hit.point);
+
+                if (hit.collider.CompareTag("Player"))
+                {
+                    GameManager.Instance.RestartLevel();
+                }
             }
         }
     }
