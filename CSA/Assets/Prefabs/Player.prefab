@@ -19964,12 +19964,12 @@ MonoBehaviour:
     m_Bits: 64
   _characterBounds:
     m_Center: {x: 0, y: 0, z: 0}
-    m_Extent: {x: 0.5, y: 0.65, z: 0}
+    m_Extent: {x: 0.5, y: 0.45, z: 0}
   _groundLayer:
     serializedVersion: 2
     m_Bits: 520
-  _detectorCount: 3
-  _detectionRayLength: 0.1
+  _detectorCount: 4
+  _detectionRayLength: 0.18
   _rayBuffer: 0.1
   _acceleration: 90
   _moveClamp: 13
@@ -20184,7 +20184,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6432609861764478824}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.685, z: 0}
+  m_LocalPosition: {x: 0, y: -0.65, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -20251,7 +20251,7 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6432609861764478824}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 6e5b5f4662f713845b0c28185c4ea62c, type: 2}
   m_CullingMode: 0
