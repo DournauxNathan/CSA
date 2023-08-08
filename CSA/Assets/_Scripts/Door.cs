@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Door : MonoBehaviour
 {
@@ -8,7 +9,10 @@ public class Door : MonoBehaviour
     [SerializeField] private bool itemNeeded;
     [SerializeField] private Animator _anim;
     private bool isActive = false;
-    
+
+    [SerializeField] private bool callAnimationOver = false;
+
+
     [ContextMenu("Open")]
     public void Open()
     {
@@ -27,7 +31,7 @@ public class Door : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning("Item not found");
+            //Debug.LogWarning("Item not found");
             if (!isActive && !itemNeeded)
             {
                 isActive = true;
@@ -36,4 +40,18 @@ public class Door : MonoBehaviour
         }
         
     }
+
+    // This method can be called by an Animator Event at the end of the animation.
+    public void AnimationOver()
+    {
+        if (callAnimationOver)
+        {
+            if (GameManager.Instance != null)
+            {
+                GameManager.Instance.LoadLevel();
+            }
+        }
+    }
 }
+
+
