@@ -11,14 +11,21 @@ public class GameManager : Singleton<GameManager>
     private void Start()
     {
         DontDestroyOnLoad(this.gameObject);
-
     }
+
+    #region Level Manager
+
 
     public void LoadLevel()
     {
         screennFader.StartFadeOut();
         // You might want to delay loading the next scene until the fade out is complete.
         StartCoroutine(LoadNextSceneAfterFade());
+    }
+
+    public void LoadLevel(int _level)
+    {
+        SceneManager.LoadScene(_level);
     }
 
     public void LoadNextLevel()
@@ -51,5 +58,12 @@ public class GameManager : Singleton<GameManager>
 #endif
         // Reload the currently active scene.
         SceneManager.LoadScene(levelToLoad);
+    }
+
+    #endregion
+
+    public void Quit()
+    {
+        Application.Quit();
     }
 }

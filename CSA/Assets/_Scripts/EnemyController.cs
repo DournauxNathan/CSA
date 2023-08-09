@@ -6,7 +6,7 @@ using UnityEngine.Events;
 public class EnemyController : MonoBehaviour
 {
     public List<Transform> waypoints;
-    public List<Button> weakspots;
+    public List<GameButton> weakspots;
     public int weakspotsCount;
     public SpriteRenderer sprite;
     public FieldOfView fov;
