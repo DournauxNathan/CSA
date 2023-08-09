@@ -11,7 +11,7 @@ public class ScreenFader : Singleton<ScreenFader>
 
     private void Awake()
     {
-        GameManager.screennFader = this;
+        GameManager.screenFader = this;
     }
 
     public void StartFadeIn()

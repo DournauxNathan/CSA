@@ -1,33 +1,25 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using TMPro;
-using UnityEngine.Events;
-using System.Linq;
 
-
-public class MainMenuUiController : MonoBehaviour
+public class OptionsUIController : MonoBehaviour
 {
-    public Button playButton;
+    [Header("Options")]
     public Button optionsButton;
-    public Button quitButton;
     public GameObject optionsPanel;
     public Button[] optionsButtons;
     public GameObject[] optionsTabs;
 
-    private void Start()
+    // Start is called before the first frame update
+    void Start()
     {
-        playButton.onClick.AddListener(PlayGame);
         optionsButton.onClick.AddListener(ShowOptionsPanel);
-        quitButton.onClick.AddListener(() => GameManager.Instance.Quit());
 
-        for (int i = 0; i < optionsButtons.Length; i++)
-        {           
-            Debug.Log("optionsButtons[" + i + "].onClick.AddListener(() => DisplayOptionTab(" + i + "));");
-        }
-
+        /*for (int i = 0; i < optionsButtons.Length; i++)
+        {
+            
+        }*/
 
         optionsButtons[0].onClick.AddListener(() => DisplayOptionTab(0));
         optionsButtons[1].onClick.AddListener(() => DisplayOptionTab(1));
@@ -36,32 +28,25 @@ public class MainMenuUiController : MonoBehaviour
         optionsButtons[4].onClick.AddListener(() => DisplayOptionTab(4));
         optionsButtons[5].onClick.AddListener(() => DisplayOptionTab(5));
 
-
         for (int i = 0; i < optionsTabs.Length; i++)
         {
             optionsTabs[i].SetActive(false);
         }
 
         HideOptionsPanel();
-
-
     }
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape) && optionsButton.IsActive())
+        if (Input.GetKeyDown(KeyCode.Escape) && optionsPanel.activeSelf)
         {
             HideOptionsPanel();
         }
     }
 
-    private void PlayGame()
-    {
-        GameManager.Instance.LoadLevel(GameManager.Instance.levelToLoad);
-    }
-
     private void ShowOptionsPanel()
     {
+        Debug.Log("");
         optionsPanel.SetActive(true);
     }
 

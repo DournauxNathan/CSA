@@ -10,7 +10,7 @@ public class Door : MonoBehaviour
     [SerializeField] private Animator _anim;
     private bool isActive = false;
 
-    [SerializeField] private bool callAnimationOver = false;
+    [SerializeField] private UnityEvent onAnimationOver;
 
 
     [ContextMenu("Open")]
@@ -44,13 +44,7 @@ public class Door : MonoBehaviour
     // This method can be called by an Animator Event at the end of the animation.
     public void AnimationOver()
     {
-        if (callAnimationOver)
-        {
-            if (GameManager.Instance != null)
-            {
-                GameManager.Instance.LoadLevel();
-            }
-        }
+        onAnimationOver?.Invoke();
     }
 }
 

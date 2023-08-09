@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 public class GameManager : Singleton<GameManager>
 {
     public int levelToLoad;
-    public static ScreenFader screennFader;
+    public static ScreenFader screenFader;
 
     private void Start()
     {
@@ -18,7 +18,7 @@ public class GameManager : Singleton<GameManager>
 
     public void LoadLevel()
     {
-        screennFader.StartFadeOut();
+        screenFader.StartFadeOut();
         // You might want to delay loading the next scene until the fade out is complete.
         StartCoroutine(LoadNextSceneAfterFade());
     }
@@ -67,3 +67,4 @@ public class GameManager : Singleton<GameManager>
         Application.Quit();
     }
 }
+
