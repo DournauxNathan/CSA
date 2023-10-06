@@ -8,6 +8,8 @@ public class GameManager : Singleton<GameManager>
     public int levelToLoad;
     public static ScreenFader screenFader;
 
+    public int tutoTracker = 0;
+
     private void Start()
     {
         DontDestroyOnLoad(this.gameObject);
@@ -58,6 +60,8 @@ public class GameManager : Singleton<GameManager>
 #endif
         // Reload the currently active scene.
         SceneManager.LoadScene(levelToLoad);
+
+        GameManager.Instance.tutoTracker = 0;
     }
 
     #endregion
@@ -66,5 +70,7 @@ public class GameManager : Singleton<GameManager>
     {
         Application.Quit();
     }
+
+    
 }
 

@@ -1,3 +1,5 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -15,10 +17,10 @@ public class ColliderInteraction : MonoBehaviour
     public bool detectOnTriggerEnter = true; // Detect collisions on OnTriggerEnter.
     public bool detectOnTriggerExit = true; // Detect collisions on OnTriggerExit.
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
         // Check if detection is enabled and conditions are met for entering.
-        if (detectOnTriggerEnter && CheckInteractionConditions(other))
+        if (detectOnTriggerEnter && CheckInteractionConditions(collision))
         {
             HandleEnterEvent(); // Trigger the enter event.
         }
@@ -28,19 +30,20 @@ public class ColliderInteraction : MonoBehaviour
         }
     }
 
-    private void OnTriggerExit(Collider other)
+    private void OnTriggerExit2D(Collider2D collision)
     {
         // Check if detection is enabled and conditions are met for exiting.
-        if (detectOnTriggerExit && CheckInteractionConditions(other))
+        if (detectOnTriggerExit && CheckInteractionConditions(collision))
         {
             HandleExitEvent(); // Trigger the exit event.
         }
     }
 
-    private bool CheckInteractionConditions(Collider other)
+
+    private bool CheckInteractionConditions(Collider2D collision)
     {
         // Check if conditions are met for the interaction based on tag requirement.
-        if (requireTag && !other.CompareTag(requiredTag))
+        if (requireTag && !collision.CompareTag(requiredTag))
         {
             return false; // Conditions not met.
         }
@@ -63,5 +66,10 @@ public class ColliderInteraction : MonoBehaviour
     public void HandleNextLevel()
     {
         GameManager.Instance.LoadLevel();
+    }
+
+    private void LateUpdate()
+    {
+
     }
 }

@@ -2056,6 +2056,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   levelToLoad: 0
+  tutoTracker: 0
 --- !u!4 &1437247396
 Transform:
   m_ObjectHideFlags: 0
