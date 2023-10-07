@@ -285,6 +285,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: Security Camera
       objectReference: {fileID: 0}
+    - target: {fileID: 131663527874916782, guid: c84a9a5128626734fb024146f8a53145, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 131663527874916782, guid: c84a9a5128626734fb024146f8a53145, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 131663527874916782, guid: c84a9a5128626734fb024146f8a53145, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 131663527874916785, guid: c84a9a5128626734fb024146f8a53145, type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c84a9a5128626734fb024146f8a53145, type: 3}
 --- !u!1 &88536070
@@ -796,7 +812,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 326194428, guid: 42303504a4fc90a43bc5178df9876bf2, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.712728
+      value: -0.71082735
       objectReference: {fileID: 0}
     - target: {fileID: 326194428, guid: 42303504a4fc90a43bc5178df9876bf2, type: 3}
       propertyPath: m_LocalPosition.y
@@ -27279,7 +27295,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 719255497423266468, guid: 611afce28ba29184bbadb9081a6f358c, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -6.887272
+      value: -8.310827
       objectReference: {fileID: 0}
     - target: {fileID: 719255497423266468, guid: 611afce28ba29184bbadb9081a6f358c, type: 3}
       propertyPath: m_LocalPosition.y
@@ -27362,70 +27378,6 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 980641956, guid: 928eecfede9225647af958747588aa59, type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 980641956, guid: 928eecfede9225647af958747588aa59, type: 3}
-      propertyPath: m_Color.a
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 980641956, guid: 928eecfede9225647af958747588aa59, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 972260397054834512, guid: 928eecfede9225647af958747588aa59, type: 3}
-      propertyPath: text
-      value: 
-      objectReference: {fileID: 8235750133719584787}
-    - target: {fileID: 972260397054834512, guid: 928eecfede9225647af958747588aa59, type: 3}
-      propertyPath: image
-      value: 
-      objectReference: {fileID: 8235750133719584788}
-    - target: {fileID: 972260397054834512, guid: 928eecfede9225647af958747588aa59, type: 3}
-      propertyPath: inputsToDisplay.Array.size
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 972260397054834512, guid: 928eecfede9225647af958747588aa59, type: 3}
-      propertyPath: inputsToDisplay.Array.data[0].text
-      value: '- Jump'
-      objectReference: {fileID: 0}
-    - target: {fileID: 972260397054834512, guid: 928eecfede9225647af958747588aa59, type: 3}
-      propertyPath: inputsToDisplay.Array.data[1].text
-      value: Hide yourself from camera !
-      objectReference: {fileID: 0}
-    - target: {fileID: 972260397054834512, guid: 928eecfede9225647af958747588aa59, type: 3}
-      propertyPath: inputsToDisplay.Array.data[2].text
-      value: '- Use Object'
-      objectReference: {fileID: 0}
-    - target: {fileID: 972260397054834512, guid: 928eecfede9225647af958747588aa59, type: 3}
-      propertyPath: inputsToDisplay.Array.data[3].text
-      value: '- Aim'
-      objectReference: {fileID: 0}
-    - target: {fileID: 972260397054834512, guid: 928eecfede9225647af958747588aa59, type: 3}
-      propertyPath: inputsToDisplay.Array.data[4].text
-      value: '- Shoot'
-      objectReference: {fileID: 0}
-    - target: {fileID: 972260397054834512, guid: 928eecfede9225647af958747588aa59, type: 3}
-      propertyPath: inputsToDisplay.Array.data[0].image
-      value: 
-      objectReference: {fileID: 21300000, guid: 24296c4a88ec9464a82e9d12b8354dbf, type: 3}
-    - target: {fileID: 972260397054834512, guid: 928eecfede9225647af958747588aa59, type: 3}
-      propertyPath: inputsToDisplay.Array.data[1].image
-      value: 
-      objectReference: {fileID: 21300000, guid: 44888644a6ec16b4587632e319fd67ae, type: 3}
-    - target: {fileID: 972260397054834512, guid: 928eecfede9225647af958747588aa59, type: 3}
-      propertyPath: inputsToDisplay.Array.data[2].image
-      value: 
-      objectReference: {fileID: 21300000, guid: 8620bcf7fa769e94fa548c2fc0325ef4, type: 3}
-    - target: {fileID: 972260397054834512, guid: 928eecfede9225647af958747588aa59, type: 3}
-      propertyPath: inputsToDisplay.Array.data[3].image
-      value: 
-      objectReference: {fileID: 21300000, guid: 4f85e52bb8c84e649aecf4aeac3d66e9, type: 3}
-    - target: {fileID: 972260397054834512, guid: 928eecfede9225647af958747588aa59, type: 3}
-      propertyPath: inputsToDisplay.Array.data[4].image
-      value: 
-      objectReference: {fileID: 21300000, guid: 8620bcf7fa769e94fa548c2fc0325ef4, type: 3}
     - target: {fileID: 8235750133737544483, guid: 928eecfede9225647af958747588aa59, type: 3}
       propertyPath: m_Name
       value: UI
@@ -27525,27 +27477,5 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1b619502e03beb34d8a3c82f536fd97f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &8235750133719584787 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 101566755, guid: 928eecfede9225647af958747588aa59, type: 3}
-  m_PrefabInstance: {fileID: 8235750133719584785}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &8235750133719584788 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 980641956, guid: 928eecfede9225647af958747588aa59, type: 3}
-  m_PrefabInstance: {fileID: 8235750133719584785}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
