@@ -2,11 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[ExecuteInEditMode]
 public class FieldOfView : MonoBehaviour
 {
     public Transform sprite;
     public float radius;
     [Range(1, 360)] public float angle;
+    [Range(3, 48)] public int smoothFactor = 8;
     public LayerMask targetMask;
     public LayerMask obstuctionLayer;
 
@@ -34,19 +36,19 @@ public class FieldOfView : MonoBehaviour
     }
 
     private void FOV()
-    {
-        Collider2D rangeCheck = Physics2D.OverlapCircle(sprite.position, radius, targetMask);
+    {        
+        Collider2D rangeCheck = Physics2D.OverlapCircle(Vector3.zero, radius, targetMask);
 
         if (rangeCheck != null)
         {
             target = rangeCheck.transform;
-            Vector2 directionToTarget = (target.position - sprite.position).normalized;
+            Vector2 directionToTarget = (target.position - Vector3.zero).normalized;
 
             if (Vector2.Angle(sprite.rotation.y == 180 ? -sprite.right : sprite.right, directionToTarget) < angle / 2)
             {
-                float distance = Vector2.Distance(sprite.position, target.position);
+                float distance = Vector2.Distance(Vector3.zero, target.position);
 
-                if (!Physics2D.Raycast(sprite.position, directionToTarget, distance, obstuctionLayer))
+                if (!Physics2D.Raycast(Vector3.zero, directionToTarget, distance, obstuctionLayer))
                 {
                     canSeePlayer = true;
                 }
@@ -67,37 +69,12 @@ public class FieldOfView : MonoBehaviour
             target = null;
             canSeePlayer = false;
         }
-
     }
 
     public bool IsPlayerDetected()
     {
         return canSeePlayer;
     }
-
-#if UNITY_EDITOR
-
-    private void OnDrawGizmos()
-    {
-        UnityEditor.Handles.color = Color.white;
-
-        Vector3 angleA = DirectionFromAngle(-angle / 2);
-        Vector3 angleB = DirectionFromAngle(angle / 2);
-
-        UnityEditor.Handles.DrawWireArc(sprite.position, Vector3.forward, angleA, angle, radius, 2f);
-
-        Gizmos.color = Color.red;
-        Gizmos.DrawLine(sprite.position, sprite.position + angleA * radius);
-        Gizmos.DrawLine(sprite.position, sprite.position + angleB * radius);
-
-        if (canSeePlayer)
-        {
-            Gizmos.color = Color.blue;
-            Gizmos.DrawLine(sprite.position, target.position);
-        }
-
-    }
-#endif
 
     public void Pause(bool value)
     {
@@ -107,11 +84,6 @@ public class FieldOfView : MonoBehaviour
         {
             StartCoroutine(FOVCheck());
         }
-    }
-
-    private Vector2 DirectionFromAngle(float angleInDegrees)
-    {
-        return (Vector2)(Quaternion.Euler(0, 0, angleInDegrees) * (sprite.rotation.y == 180 ? -sprite.right : sprite.right));
     }
 
     public Vector3 GetVectorFromAngles(float angle)
