@@ -84,7 +84,7 @@ public class FieldOfView : MonoBehaviour
         Vector3 angleA = DirectionFromAngle(-angle / 2);
         Vector3 angleB = DirectionFromAngle(angle / 2);
 
-        UnityEditor.Handles.DrawWireArc(sprite.position, Vector3.forward, angleA, angle, radius, 5f);
+        UnityEditor.Handles.DrawWireArc(sprite.position, Vector3.forward, angleA, angle, radius, 2f);
 
         Gizmos.color = Color.red;
         Gizmos.DrawLine(sprite.position, sprite.position + angleA * radius);

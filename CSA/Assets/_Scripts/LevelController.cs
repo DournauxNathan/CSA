@@ -2,11 +2,11 @@ using UnityEngine;
 
 public class LevelController : MonoBehaviour
 {
-    private bool isLevelCleared;
+    //private bool isLevelCleared = false;
     
     public void LevelClear()
     {
-        isLevelCleared = true;
+        //isLevelCleared = true;
         GameManager.Instance.LoadLevel();
     }
 }
