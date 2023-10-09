@@ -4,12 +4,18 @@ using UnityEngine;
 
 public class SecurityCamera : Interactable, IInteractable
 {
-    [SerializeField] private FieldOfView fov;
+    private FieldOfView fov;
     [SerializeField] private Animator _anim;
 
     private void Start()
     {
+        fov = GetComponent<FieldOfView>();
         Reset();
+    }
+
+    private void Update()
+    {
+
     }
 
     private void LateUpdate()

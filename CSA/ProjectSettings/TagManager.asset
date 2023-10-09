@@ -16,7 +16,7 @@ TagManager:
   - Detectable
   - Player
   - Wall
-  - TileCollision
+  - Object
   - 
   - 
   - 
