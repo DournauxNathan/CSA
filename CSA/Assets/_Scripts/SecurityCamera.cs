@@ -7,6 +7,7 @@ public class SecurityCamera : Interactable, IInteractable
     [SerializeField] private Animator _anim;
 
     [Header("Field Of View Parameters")]
+    [SerializeField] private LayerMask layerMask;
     [SerializeField] private Transform prefabFov;
     [SerializeField] private Transform endPoint;
     private FieldOfView fieldOfView;
@@ -14,8 +15,6 @@ public class SecurityCamera : Interactable, IInteractable
     [SerializeField] [Range(0f, 360f)] private float fov;
     [SerializeField] private float viewDistance;
     
-    public bool isPlayerDetected;
-
     Vector3 aimDir;
 
     private void Start()
@@ -46,32 +45,35 @@ public class SecurityCamera : Interactable, IInteractable
         }
     }
 
-    public void FindTargetPlayer()
-    {
+    private void FindTargetPlayer()
+    {        
         if (Vector3.Distance(GetPosition(), player.GetPosition()) < viewDistance)
         {
             //Player inside viewDistance
             Vector3 dirToPlayer = (player.GetPosition() - GetPosition()).normalized;
 
             //Player inside Field Of View
-            if (Vector3.Angle(aimDir, dirToPlayer) < fov /2f)
+            if (Vector3.Angle(aimDir, dirToPlayer) < fov / 2f)
             {
-                GameManager.Instance.isPlayerDetected = true;
-                Alert();
-                
-                /*RaycastHit2D raycastHit2D = Physics2D.Raycast(GetPosition(), dirToPlayer, viewDistance);
-                if (raycastHit2D.collider != null)
+                RaycastHit2D raycastHit2D = Physics2D.Raycast(GetPosition(), dirToPlayer, viewDistance, layerMask);
+
+                if (raycastHit2D.collider.enabled == true)
                 {
+                    Debug.Log(raycastHit2D.collider.gameObject);
+
                     if (raycastHit2D.collider.gameObject.GetComponent<PlayerController>() != null)
                     {
+                        Debug.DrawLine(GetPosition(), player.GetPosition());
                         //Hit Player
+                        GameManager.Instance.isPlayerDetected = true;
+                        Alert();
                     }
-                }*/
-            }
-            else
-            {
-                //Hit something else
-                GameManager.Instance.isPlayerDetected = false;
+                }
+                else
+                {
+                    //Hit something else
+                    GameManager.Instance.isPlayerDetected = false;
+                }
             }
         }
     }

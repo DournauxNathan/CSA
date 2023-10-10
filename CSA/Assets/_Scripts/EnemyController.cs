@@ -47,7 +47,14 @@ public class EnemyController : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
+    {
+        Move();
+        SetFOV();
+        FindTargetPlayer();        
+    }
+
+    private void Move()
     {
         Vector3 direction = (target.position - this.transform.position).normalized;
 
@@ -73,18 +80,21 @@ public class EnemyController : MonoBehaviour
                 transform.localRotation = Quaternion.Euler(0, 0, 0);
             }
         }
+    }
 
+    private void SetFOV()
+    {
         aimDir = (target.position - transform.position).normalized;
 
         if (fieldOfView != null)
         {
             fieldOfView.SetOrigin(transform.position);
             fieldOfView.SetAimDirection(aimDir);
+
         }
     }
 
-
-    public void FindTargetPlayer()
+    private void FindTargetPlayer()
     {
         if (Vector3.Distance(GetPosition(), player.GetPosition()) < viewDistance)
         {
@@ -94,22 +104,24 @@ public class EnemyController : MonoBehaviour
             //Player inside Field Of View
             if (Vector3.Angle(aimDir, dirToPlayer) < fov / 2f)
             {
-                GameManager.Instance.isPlayerDetected = true;
-                Alert();
+                RaycastHit2D raycastHit2D = Physics2D.Raycast(GetPosition(), dirToPlayer, viewDistance);
+                
+                Debug.DrawLine(GetPosition(), player.GetPosition());
 
-                /*RaycastHit2D raycastHit2D = Physics2D.Raycast(GetPosition(), dirToPlayer, viewDistance);
-                if (raycastHit2D.collider != null)
+                if (raycastHit2D.collider.enabled == true)
                 {
                     if (raycastHit2D.collider.gameObject.GetComponent<PlayerController>() != null)
                     {
                         //Hit Player
+                        GameManager.Instance.isPlayerDetected = true;
+                        Alert();
                     }
-                }*/
-            }
-            else
-            {
-                //Hit something else
-                GameManager.Instance.isPlayerDetected = false;
+                }
+                else
+                {
+                    //Hit something else
+                    GameManager.Instance.isPlayerDetected = false;
+                }
             }
         }
     }
@@ -118,7 +130,6 @@ public class EnemyController : MonoBehaviour
     {
         GameManager.Instance.RestartLevel();
     }
-
 
     public void UpdateWeakSpotCount()
     {

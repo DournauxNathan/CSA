@@ -255,7 +255,6 @@ MonoBehaviour:
   waypoints:
   - {fileID: 0}
   - {fileID: 0}
-  - {fileID: 0}
   speed: 5
   enemyWaitTime: 2
   isMoving: 1
@@ -263,21 +262,9 @@ MonoBehaviour:
   weakspots:
   - {fileID: 8738403429764242799}
   weakspotsCount: 1
-  prefabFov: {fileID: 0}
-  fov: 0
-  viewDistance: 0
+  prefabFov: {fileID: 6591503819058119104, guid: 9b446c9ca894a864dbd9517a9a0d19ab, type: 3}
+  fov: 30
+  viewDistance: 4
   onDestroy:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: Door, Assembly-CSharp
-        m_MethodName: Open
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
