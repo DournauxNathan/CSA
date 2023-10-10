@@ -12,6 +12,7 @@ public class SecurityCamera : Interactable, IInteractable
     [SerializeField] [Range(0f, 360f)] private float fov;
     [SerializeField] private float viewDistance;
 
+    Vector3 aimDir;
     [SerializeField] private Animator _anim;
     public bool isPlayerDetected;
 
@@ -30,22 +31,41 @@ public class SecurityCamera : Interactable, IInteractable
     private void Update()
     {
         Vector3 targetPosition = endPoint.position;
-        Vector3 aimDir = (targetPosition - transform.position).normalized;
-        fieldOfView.SetAimDirection(aimDir);
-        fieldOfView.SetOrigin(transform.position);
+        aimDir = (targetPosition - transform.position).normalized;
 
+        if (fieldOfView != null)
+        {
+            fieldOfView.SetOrigin(transform.position);
+            fieldOfView.SetAimDirection(aimDir);
+        }
+        FindTargetPlayer();
     }
 
     public void FindTargetPlayer()
     {
+        Debug.Log(Vector3.Distance(GetPosition(), player.GetPosition()));
+
         if (Vector3.Distance(GetPosition(), player.GetPosition()) < viewDistance)
         {
-            Alert();
+            Vector3 dirToPlayer = (player.GetPosition() - GetPosition()).normalized;
+
+            if (Vector3.Angle(aimDir, dirToPlayer) < fov /2f)
+            {
+                Alert();
+
+            }
+            else
+            {
+
+                isPlayerDetected = false;
+            }
         }
+        
     }
+
     public void Alert()
     {
-        Debug.Log(isPlayerDetected);
+        isPlayerDetected = true;
     }
 
     #region Interactable interface
