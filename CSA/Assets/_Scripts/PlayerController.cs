@@ -350,6 +350,11 @@ public class PlayerController : MonoBehaviour, IPlayerController {
 
     #endregion
     
+    public Vector3 GetPosition()
+    {
+        return transform.position;
+    }
+
     public void ResetCamouflage()
     {
         sprite.color = defaultColor.color;

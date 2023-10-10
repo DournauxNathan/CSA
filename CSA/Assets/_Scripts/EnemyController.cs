@@ -59,10 +59,10 @@ public class EnemyController : MonoBehaviour
 
     private void LateUpdate()
     {
-        if (fov.IsPlayerDetected())
+        /*if (fov.IsPlayerDetected())
         {
             GameManager.Instance.RestartLevel();
-        }
+        }*/
     }
 
     public void UpdateWeakSpotCount()

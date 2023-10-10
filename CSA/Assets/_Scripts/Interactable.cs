@@ -8,6 +8,7 @@ public class Interactable : MonoBehaviour
 {
     public bool isActive;
     public float coolDown;
+    public PlayerController player;
     public float resetTimer { get; private set; }
 
     public UnityEvent onInteract, onActivate, onDeactivate, onToggle, onTimerEnd;
@@ -15,6 +16,7 @@ public class Interactable : MonoBehaviour
     public void Reset()
     {
         resetTimer = coolDown;
+        player = GameObject.Find("Player").GetComponent<PlayerController>();
     }
 
     public IEnumerator DecreaseTimer()
