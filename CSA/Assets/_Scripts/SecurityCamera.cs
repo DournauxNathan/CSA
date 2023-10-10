@@ -43,29 +43,37 @@ public class SecurityCamera : Interactable, IInteractable
 
     public void FindTargetPlayer()
     {
-        Debug.Log(Vector3.Distance(GetPosition(), player.GetPosition()));
-
         if (Vector3.Distance(GetPosition(), player.GetPosition()) < viewDistance)
         {
+            //Player inside viewDistance
             Vector3 dirToPlayer = (player.GetPosition() - GetPosition()).normalized;
 
+            //Player inside Field Of View
             if (Vector3.Angle(aimDir, dirToPlayer) < fov /2f)
             {
+                isPlayerDetected = true;
                 Alert();
-
+                
+                /*RaycastHit2D raycastHit2D = Physics2D.Raycast(GetPosition(), dirToPlayer, viewDistance);
+                if (raycastHit2D.collider != null)
+                {
+                    if (raycastHit2D.collider.gameObject.GetComponent<PlayerController>() != null)
+                    {
+                        //Hit Player
+                    }
+                }*/
             }
             else
             {
-
+                //Hit something else
                 isPlayerDetected = false;
             }
         }
-        
     }
 
     public void Alert()
     {
-        isPlayerDetected = true;
+        GameManager.Instance.RestartLevel();
     }
 
     #region Interactable interface
