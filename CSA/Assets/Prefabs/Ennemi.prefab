@@ -32,7 +32,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 59309783055470161}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &59309781190017394
 SpriteRenderer:
@@ -126,6 +126,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isActive: 0
   coolDown: 0
+  player: {fileID: 0}
   onInteract:
     m_PersistentCalls:
       m_Calls: []
@@ -163,7 +164,6 @@ GameObject:
   m_Component:
   - component: {fileID: 59309783055470161}
   - component: {fileID: 59309783055470166}
-  - component: {fileID: 59309783055470163}
   - component: {fileID: 59309783055470160}
   m_Layer: 0
   m_Name: Ennemi
@@ -184,7 +184,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 7425615319425176721}
   - {fileID: 59309781190017395}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -241,29 +240,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &59309783055470163
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 59309783055470167}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b2ee82f94003384bb3b9f407121a131, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sprite: {fileID: 0}
-  radius: 2.67
-  angle: 59
-  smoothFactor: 8
-  targetMask:
-    serializedVersion: 2
-    m_Bits: 256
-  layerMask:
-    serializedVersion: 2
-    m_Bits: 0
-  debugMesh: 0
 --- !u!114 &59309783055470160
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -280,15 +256,16 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  weakspots:
-  - {fileID: 8738403429764242799}
-  weakspotsCount: 1
-  sprite: {fileID: 59309783055470166}
-  fov: {fileID: 59309783055470163}
   speed: 5
   enemyWaitTime: 2
   isMoving: 1
   destinationPoint: 0
+  weakspots:
+  - {fileID: 8738403429764242799}
+  weakspotsCount: 1
+  prefabFov: {fileID: 0}
+  fov: 0
+  viewDistance: 0
   onDestroy:
     m_PersistentCalls:
       m_Calls:
@@ -304,34 +281,3 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!1 &1487598442018447889
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 7425615319425176721}
-  m_Layer: 0
-  m_Name: Eyes
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &7425615319425176721
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1487598442018447889}
-  m_LocalRotation: {x: -0, y: -0, z: 0.2588186, w: 0.965926}
-  m_LocalPosition: {x: 0, y: 0.5, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 59309783055470161}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 30}

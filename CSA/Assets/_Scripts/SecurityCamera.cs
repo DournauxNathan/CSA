@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class SecurityCamera : Interactable, IInteractable
 {
+    [SerializeField] private Animator _anim;
+
     [Header("Field Of View Parameters")]
     [SerializeField] private Transform prefabFov;
     [SerializeField] private Transform endPoint;
@@ -11,11 +13,10 @@ public class SecurityCamera : Interactable, IInteractable
     [Space(5)]
     [SerializeField] [Range(0f, 360f)] private float fov;
     [SerializeField] private float viewDistance;
-
-    Vector3 aimDir;
-    [SerializeField] private Animator _anim;
+    
     public bool isPlayerDetected;
 
+    Vector3 aimDir;
 
     private void Start()
     {
