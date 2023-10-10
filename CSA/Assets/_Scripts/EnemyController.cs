@@ -83,13 +83,42 @@ public class EnemyController : MonoBehaviour
         }
     }
 
-    private void LateUpdate()
+
+    public void FindTargetPlayer()
     {
-        /*if (fov.IsPlayerDetected())
+        if (Vector3.Distance(GetPosition(), player.GetPosition()) < viewDistance)
         {
-            GameManager.Instance.RestartLevel();
-        }*/
+            //Player inside viewDistance
+            Vector3 dirToPlayer = (player.GetPosition() - GetPosition()).normalized;
+
+            //Player inside Field Of View
+            if (Vector3.Angle(aimDir, dirToPlayer) < fov / 2f)
+            {
+                GameManager.Instance.isPlayerDetected = true;
+                Alert();
+
+                /*RaycastHit2D raycastHit2D = Physics2D.Raycast(GetPosition(), dirToPlayer, viewDistance);
+                if (raycastHit2D.collider != null)
+                {
+                    if (raycastHit2D.collider.gameObject.GetComponent<PlayerController>() != null)
+                    {
+                        //Hit Player
+                    }
+                }*/
+            }
+            else
+            {
+                //Hit something else
+                GameManager.Instance.isPlayerDetected = false;
+            }
+        }
     }
+
+    public void Alert()
+    {
+        GameManager.Instance.RestartLevel();
+    }
+
 
     public void UpdateWeakSpotCount()
     {
@@ -109,5 +138,10 @@ public class EnemyController : MonoBehaviour
 
         target = waypoints[destinationPoint];
         isMoving = true;
+    }
+
+    public Vector3 GetPosition()
+    {
+        return transform.position;
     }
 }

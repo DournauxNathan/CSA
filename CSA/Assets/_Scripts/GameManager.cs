@@ -10,6 +10,8 @@ public class GameManager : Singleton<GameManager>
 
     public int tutoTracker = 0;
 
+    public bool isPlayerDetected = false;
+
     private void Start()
     {
         DontDestroyOnLoad(this.gameObject);

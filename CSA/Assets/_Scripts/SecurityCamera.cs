@@ -39,7 +39,11 @@ public class SecurityCamera : Interactable, IInteractable
             fieldOfView.SetOrigin(transform.position);
             fieldOfView.SetAimDirection(aimDir);
         }
-        FindTargetPlayer();
+
+        if (fieldOfView.enabled == true)
+        {
+            FindTargetPlayer();
+        }
     }
 
     public void FindTargetPlayer()
@@ -52,7 +56,7 @@ public class SecurityCamera : Interactable, IInteractable
             //Player inside Field Of View
             if (Vector3.Angle(aimDir, dirToPlayer) < fov /2f)
             {
-                isPlayerDetected = true;
+                GameManager.Instance.isPlayerDetected = true;
                 Alert();
                 
                 /*RaycastHit2D raycastHit2D = Physics2D.Raycast(GetPosition(), dirToPlayer, viewDistance);
@@ -67,7 +71,7 @@ public class SecurityCamera : Interactable, IInteractable
             else
             {
                 //Hit something else
-                isPlayerDetected = false;
+                GameManager.Instance.isPlayerDetected = false;
             }
         }
     }
@@ -80,7 +84,7 @@ public class SecurityCamera : Interactable, IInteractable
     #region Interactable interface
     public void Activate()
     {
-        throw new System.NotImplementedException();
+        isActive = true;
     }
 
     public void Deactivate()
@@ -91,6 +95,7 @@ public class SecurityCamera : Interactable, IInteractable
     public void Interact()
     {
         Toogle();
+        Debug.Log("Hey");
     }
 
     public void Timer()
@@ -104,6 +109,7 @@ public class SecurityCamera : Interactable, IInteractable
         {
             isActive = false;
             _anim.enabled = false;
+            fieldOfView.enabled = false;
 
             StartCoroutine(DecreaseTimer());
             onDeactivate?.Invoke();
@@ -112,6 +118,8 @@ public class SecurityCamera : Interactable, IInteractable
         {
             isActive = true;
             _anim.enabled = true;
+            fieldOfView.enabled = true;
+
             onActivate?.Invoke();
             coolDown = resetTimer;
         }
