@@ -57,7 +57,7 @@ public class SecurityCamera : Interactable, IInteractable
             {
                 RaycastHit2D raycastHit2D = Physics2D.Raycast(GetPosition(), dirToPlayer, viewDistance, layerMask);
 
-                if (raycastHit2D.collider.enabled == true)
+                if (raycastHit2D.collider != null && raycastHit2D.collider.enabled == true)
                 {
                     Debug.Log(raycastHit2D.collider.gameObject);
 

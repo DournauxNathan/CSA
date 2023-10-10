@@ -108,7 +108,7 @@ public class EnemyController : MonoBehaviour
                 
                 Debug.DrawLine(GetPosition(), player.GetPosition());
 
-                if (raycastHit2D.collider.enabled == true)
+                if (raycastHit2D.collider != null && raycastHit2D.collider.enabled == true)
                 {
                     if (raycastHit2D.collider.gameObject.GetComponent<PlayerController>() != null)
                     {

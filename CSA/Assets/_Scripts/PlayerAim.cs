@@ -43,7 +43,7 @@ public class PlayerAim : MonoBehaviour
         startPos = transform.position;
 
         interactor.gameObject.SetActive(false);
-        interactor.transform.position = startPoint.position;
+        interactor.position = startPoint.position;
 
         interactorStartPos = interactor.position;
     }
@@ -78,26 +78,27 @@ public class PlayerAim : MonoBehaviour
             Vector3 aim = new Vector3(horizontalAxis, verticalAxis,0).normalized;
             Vector3 aim2 = new Vector3(horizontalAxis, verticalAxis, 0).normalized;
 
-            if (!isShooting && !GoBack)
+            if (!isShooting && !GoBack) // Position the Interactor
             {
-                interactor.transform.position = startPoint.position;
+                interactor.position = startPoint.position;
             }
 
-            if (aim.magnitude > 0f && isTargetLocked)
+            if (aim.magnitude > 0f && isTargetLocked) //When Lock on Interactable
             {
-                endPoint.transform.position = target.position;
+                endPoint.position = target.position;
 
                 DrawAimLine(endPoint.position);
             }
-            else if (aim.magnitude > 0f)
+            else if (aim.magnitude > 0f) //When aim without target
             {
                 aim *= startOffset;
-                startPoint.transform.localPosition = aim2 ;
+                startPoint.localPosition = aim2 ;
 
                 aim *= endOffset;
-                endPoint.transform.localPosition = aim;
+                endPoint.localPosition= aim;
 
                 DrawAimLine(endPoint.position);
+                //crosshair.position = Camera.main.WorldToScreenPoint(endPoint.transform.position);
             }
 
 
@@ -216,9 +217,9 @@ public class PlayerAim : MonoBehaviour
 
             DetectBetweenEndPoint(_startPos, (CalculateDirection(_startPos, _endPos) * CalculateLineLength(_startPos, _endPos)));
 
-            _crosshairPos = Camera.main.WorldToScreenPoint(_endPos);
+            /*//_crosshairPos = Camera.main.WorldToScreenPoint(_endPos);
             _crosshairPos.z = Camera.main.transform.position.z + Camera.main.nearClipPlane;
-            crosshair.position = _crosshairPos;          
+            crosshair.position = _crosshairPos;  */        
         }
         else
         {
@@ -229,9 +230,9 @@ public class PlayerAim : MonoBehaviour
             _endPos = _startPos + (CalculateDirection(_startPos, _endPos) * CalculateLineLength(_startPos, _endPos));
             lr.SetPosition(1, target.position);
 
-            _crosshairPos = Camera.main.WorldToScreenPoint(target.position);
+            /*_crosshairPos = Camera.main.WorldToScreenPoint(target.position);
             _crosshairPos.z = Camera.main.transform.position.z + Camera.main.nearClipPlane;
-            crosshair.position = _crosshairPos;
+            crosshair.position = _crosshairPos;*/
         }        
     }
 

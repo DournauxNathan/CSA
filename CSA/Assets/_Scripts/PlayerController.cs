@@ -105,7 +105,7 @@ public class PlayerController : MonoBehaviour, IPlayerController {
             }
         }
 
-        if (!canMove && Input.Cancel)
+        if (!canMove && Input.AimMode)
         {
             canMove = true;
         }
