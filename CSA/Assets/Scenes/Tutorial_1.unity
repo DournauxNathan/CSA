@@ -615,6 +615,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 6121603992035477108, guid: 2d3cce22cb0a44446bff0713ce1eef80, type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6121603992513293277, guid: 2d3cce22cb0a44446bff0713ce1eef80, type: 3}
       propertyPath: m_Name
       value: SecurityCamera
@@ -793,6 +797,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 326194428, guid: 42303504a4fc90a43bc5178df9876bf2, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.63900423
+      objectReference: {fileID: 0}
+    - target: {fileID: 898872800, guid: 42303504a4fc90a43bc5178df9876bf2, type: 3}
+      propertyPath: radius
+      value: 2.12
+      objectReference: {fileID: 0}
+    - target: {fileID: 898872800, guid: 42303504a4fc90a43bc5178df9876bf2, type: 3}
+      propertyPath: maxRange
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 6432609860406773169, guid: 42303504a4fc90a43bc5178df9876bf2, type: 3}
       propertyPath: m_Name
       value: Player
@@ -27266,7 +27282,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 719255497423266468, guid: 611afce28ba29184bbadb9081a6f358c, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -8.239627
+      value: -8.239004
       objectReference: {fileID: 0}
     - target: {fileID: 719255497423266468, guid: 611afce28ba29184bbadb9081a6f358c, type: 3}
       propertyPath: m_LocalPosition.y

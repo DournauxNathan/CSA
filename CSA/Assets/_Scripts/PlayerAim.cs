@@ -138,7 +138,7 @@ public class PlayerAim : MonoBehaviour
             yield return null;            
         }
 
-        DetectAt(interactor.position, maxRange, _interactable);
+        DetectAt(interactor.position, radius, _interactable);
         StartCoroutine(BackTo());
     }
 
@@ -171,6 +171,7 @@ public class PlayerAim : MonoBehaviour
     #region Detection & Collision
     [Header("DETECTION & COLLISION")]
     [SerializeField] private Transform interactor;
+    [SerializeField] private float radius;
     [SerializeField] private float maxRange;
     [Space(5)]
     [SerializeField] private LayerMask _interactable;
@@ -184,11 +185,17 @@ public class PlayerAim : MonoBehaviour
 
         if (hitCollider != null)
         {
-            //Debug.Log("Collision detected");
-            isShooting = false;
+            Debug.Log("Collision detected");
             CheckInteractable(hitCollider);
+            isShooting = false;
         }
         return hitCollider != null;
+    }
+
+    private void OnDrawGizmos()
+    {
+        //Debug DetectAt method
+        Gizmos.DrawSphere(interactor.position, radius);
     }
 
     private bool CheckInteractable(Collider2D _col)
@@ -198,6 +205,7 @@ public class PlayerAim : MonoBehaviour
         if (interactable != null)
         {
             interactable.Interact();
+            Debug.Log("Interact");
             return true;
         }
         return false;
@@ -209,7 +217,7 @@ public class PlayerAim : MonoBehaviour
         {
             RaycastHit2D hit = Physics2D.Raycast(origin, direction, maxRange, _interactable);
             {
-                Debug.DrawRay(origin, direction, Color.red);
+                Debug.DrawRay(origin, direction, Color.red, .1f);
 
                 //If something was hit.
                 if (hit.collider != null)

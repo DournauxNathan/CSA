@@ -111,7 +111,7 @@ public class SecurityCamera : Interactable, IInteractable
         {
             isActive = false;
             _anim.enabled = false;
-            fieldOfView.enabled = false;
+            fieldOfView.GetComponent<MeshRenderer>().enabled = false;
 
             StartCoroutine(DecreaseTimer());
             onDeactivate?.Invoke();
@@ -120,7 +120,7 @@ public class SecurityCamera : Interactable, IInteractable
         {
             isActive = true;
             _anim.enabled = true;
-            fieldOfView.enabled = true;
+            fieldOfView.GetComponent<MeshRenderer>().enabled = true;
 
             onActivate?.Invoke();
             coolDown = resetTimer;
