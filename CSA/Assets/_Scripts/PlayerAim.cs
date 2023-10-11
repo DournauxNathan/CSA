@@ -33,14 +33,13 @@ public class PlayerAim : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        ToggleAimMode();
-        
-        if (isAimMode && controller.Input.Shoot && !GoBack && !isShooting)
+        if (isAimMode && controller.Input.Shoot)
         {
             isShooting = true;
-            
-            Shoot();
+            StartCoroutine(Shoot());
         }
+        
+        ToggleAimMode();
     }
 
     #region Aim
@@ -66,8 +65,11 @@ public class PlayerAim : MonoBehaviour
         isAimMode = true;
         crosshair.gameObject.SetActive(true);
 
-        //Joystick Handle Movement
-        HandleJoystickMovement();
+        if (!isShooting)
+        {
+            //Joystick Handle Movement
+            HandleJoystickMovement();
+        }
 
         //Draw Aim line Between Start & End Point
         DrawAimLine(crosshair.position);
@@ -86,7 +88,6 @@ public class PlayerAim : MonoBehaviour
         isTargetLocked = false;
 
         isShooting = false;
-        GoBack = false;
     }
 
     private void HandleJoystickMovement()
@@ -98,7 +99,7 @@ public class PlayerAim : MonoBehaviour
         verticalAxis = Mathf.Clamp(verticalAxis, 0f, 1f);
         Vector3 aim = new Vector3(horizontalAxis, verticalAxis, 0).normalized;
 
-        if (!isShooting && !GoBack) // Position the Interactor
+        if (!isShooting) // Position the Interactor
         {
             interactor.position = startPoint.position;
         }
@@ -117,27 +118,54 @@ public class PlayerAim : MonoBehaviour
     [Header("SHOOT")]
     [SerializeField] private float shootingSpeed;
     [SerializeField] private bool isShooting = false;
-    bool GoBack;
 
-    private void Shoot()
+    IEnumerator Shoot()
     {
-        if (isShooting && !GoBack)
-        {
-            interactor.position = Vector3.MoveTowards(interactor.position, crosshair.position, shootingSpeed * Time.deltaTime);
-            
-            DetectAt(interactor.position, .25f, _interactable);
-        }
-        
-        if (GoBack && !isShooting)
-        {
-           interactor.position = Vector3.MoveTowards(interactor.position, startPoint.position, shootingSpeed * Time.deltaTime);
+        Vector3 startPosition = interactor.position;
+        float startTime = Time.time;
+        float journeyLength = Vector3.Distance(interactor.position, crosshair.position);
+        float distanceCovered = 0f;
 
-            if (interactor.position == startPoint.position)
-            {
-                GoBack = false;
-            }
+        while (distanceCovered < journeyLength)
+        {
+            float distance = (Time.time - startTime) * shootingSpeed;
+            float journeyFraction = distance / journeyLength;
+
+            interactor.position = Vector3.MoveTowards(startPosition, crosshair.position, journeyFraction);
+            
+            distanceCovered = Vector3.Distance(startPosition, interactor.position);
+                        
+            yield return null;            
         }
+
+        DetectAt(interactor.position, maxRange, _interactable);
+        StartCoroutine(BackTo());
     }
+
+    IEnumerator BackTo()
+    {
+        Vector3 startPosition = interactor.position;
+        float startTime = Time.time;
+        float journeyLength = Vector3.Distance(interactor.position, startPoint.position);
+        float distanceCovered = 0f;
+
+        while (distanceCovered < journeyLength)
+        {
+            float distance = (Time.time - startTime) * shootingSpeed;
+            float journeyFraction = distance / journeyLength;
+
+            interactor.position = Vector3.MoveTowards(startPosition, startPoint.position, journeyFraction);
+
+            distanceCovered = Vector3.Distance(startPosition, interactor.position);
+
+            yield return null;
+        }
+
+        isShooting = false;
+        controller.canMove = true;
+        controller.SetClick(0);
+    }
+
     #endregion
 
     #region Detection & Collision
@@ -156,17 +184,9 @@ public class PlayerAim : MonoBehaviour
 
         if (hitCollider != null)
         {
-            GoBack = true;
+            //Debug.Log("Collision detected");
             isShooting = false;
-            //lockAxis = false;
-
             CheckInteractable(hitCollider);
-        }
-        else
-        {
-            GoBack = true;
-            isShooting = false;
-            //lockAxis = false;
         }
         return hitCollider != null;
     }

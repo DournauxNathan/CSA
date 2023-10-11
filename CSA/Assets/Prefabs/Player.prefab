@@ -27,7 +27,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 326194424}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.63940096, y: 2.4, z: -10}
+  m_LocalPosition: {x: -0.639627, y: 2.4, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -20261,7 +20261,7 @@ MonoBehaviour:
   endOffset: 5
   isAimMode: 0
   isTargetLocked: 0
-  shootingSpeed: 8
+  shootingSpeed: 40
   isShooting: 0
   interactor: {fileID: 1945314623}
   maxRange: 6

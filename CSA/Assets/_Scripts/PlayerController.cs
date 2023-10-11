@@ -2,10 +2,8 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour, IPlayerController {
-
-    
-
+public class PlayerController : MonoBehaviour, IPlayerController 
+{
     public Inventory inventory;
 
     // Public for external hooks
@@ -61,6 +59,7 @@ public class PlayerController : MonoBehaviour, IPlayerController {
     #region Gather Input
 
     private int nClick = 0;
+
     private void GatherInput()
     {
         Input = new FrameInput
@@ -95,6 +94,11 @@ public class PlayerController : MonoBehaviour, IPlayerController {
             }
         }
 
+    }
+
+    public void SetClick(int value)
+    {
+        nClick = value;
     }
 
     #endregion
