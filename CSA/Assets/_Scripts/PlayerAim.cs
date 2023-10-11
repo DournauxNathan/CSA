@@ -14,7 +14,6 @@ public class PlayerAim : MonoBehaviour
     private float time;
     private Vector3 _crosshairPos;
     private Vector3 startPos;
-    private float startOffset = 0.3f;
     private Vector3 _startPos;
     private Vector3 _endPos;
 

@@ -130,22 +130,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 326194424, guid: 42303504a4fc90a43bc5178df9876bf2, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 326194428, guid: 42303504a4fc90a43bc5178df9876bf2, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.21787643
+      value: -0.19548416
       objectReference: {fileID: 0}
     - target: {fileID: 326194428, guid: 42303504a4fc90a43bc5178df9876bf2, type: 3}
       propertyPath: m_LocalPosition.y
       value: 0.7337532
       objectReference: {fileID: 0}
-    - target: {fileID: 898872800, guid: 42303504a4fc90a43bc5178df9876bf2, type: 3}
-      propertyPath: crosshair
-      value: 
-      objectReference: {fileID: 1170044311}
     - target: {fileID: 6432609860406773169, guid: 42303504a4fc90a43bc5178df9876bf2, type: 3}
       propertyPath: m_Name
       value: Player
@@ -28924,11 +28916,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 928eecfede9225647af958747588aa59, type: 3}
---- !u!224 &1170044311 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 8235750133382811070, guid: 928eecfede9225647af958747588aa59, type: 3}
-  m_PrefabInstance: {fileID: 1170044310}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1170044312 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8235750133737544486, guid: 928eecfede9225647af958747588aa59, type: 3}
@@ -28968,7 +28955,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 719255497423266468, guid: 611afce28ba29184bbadb9081a6f358c, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -11.207876
+      value: -11.185484
       objectReference: {fileID: 0}
     - target: {fileID: 719255497423266468, guid: 611afce28ba29184bbadb9081a6f358c, type: 3}
       propertyPath: m_LocalPosition.y
