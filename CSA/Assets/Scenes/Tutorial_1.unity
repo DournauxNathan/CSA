@@ -872,6 +872,10 @@ PrefabInstance:
       propertyPath: crosshair
       value: 
       objectReference: {fileID: 1343783820}
+    - target: {fileID: 898872800, guid: 42303504a4fc90a43bc5178df9876bf2, type: 3}
+      propertyPath: endOffset
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 1700074569, guid: 42303504a4fc90a43bc5178df9876bf2, type: 3}
       propertyPath: m_Icon
       value: 

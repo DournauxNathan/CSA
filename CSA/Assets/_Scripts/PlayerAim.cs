@@ -5,33 +5,18 @@ using UnityEngine;
 
 public class PlayerAim : MonoBehaviour
 {
+    [Header("REFERENCES")]
+    [SerializeField] private LineRenderer lineRenderer;
+    [SerializeField] private Transform startPoint;
+    [SerializeField] private Transform crosshair;
+
     private PlayerController controller;
-    [SerializeField] private LineRenderer lr;
-    public Transform startPoint;
-    public Transform crosshair;
-    public Transform interactor;
-    private Vector3 interactorStartPos;
-
-    public LayerMask _interactable;
-
-    private float startOffset = 0.3f;
-    public float endOffset;
-    public float shootingSpeed;
-
-    public bool isAimMode = false;
-    public bool isTargetLocked = false;
-
-    public bool isShooting = false;
-    private bool GoBack;
-
     private float time;
     private Vector3 _crosshairPos;
     private Vector3 startPos;
+    private float startOffset = 0.3f;
     private Vector3 _startPos;
     private Vector3 _endPos;
-
-    public Transform target;
-    [SerializeField] private float maxRange;
 
     // Start is called before the first frame update
     void Start()
@@ -54,15 +39,16 @@ public class PlayerAim : MonoBehaviour
         if (isAimMode && controller.Input.Shoot && !GoBack && !isShooting)
         {
             isShooting = true;
-            lockAxis = true;
             
             Shoot();
         }
     }
 
-    private bool lockAxis = false;
-
     #region Aim
+    [Header("AIM")]
+    [SerializeField] private float endOffset;
+    [SerializeField] private bool isAimMode = false;
+    [SerializeField] private bool isTargetLocked = false;
     private void ToggleAimMode()
     {
         //If Player can't move bc its oress Aim button
@@ -95,7 +81,7 @@ public class PlayerAim : MonoBehaviour
         crosshair.gameObject.SetActive(false);
         interactor.gameObject.SetActive(false);
 
-        lr.enabled = false;
+        lineRenderer.enabled = false;
         target = null;
 
         isTargetLocked = false;
@@ -118,7 +104,7 @@ public class PlayerAim : MonoBehaviour
             interactor.position = startPoint.position;
         }
                 
-        if (aim.magnitude > 0f)
+        if (aim.magnitude > 0f && !isTargetLocked)
         {
             startPoint.localPosition = aim;
 
@@ -127,7 +113,13 @@ public class PlayerAim : MonoBehaviour
         }
     }
     #endregion
-    
+
+    #region Shoot
+    [Header("SHOOT")]
+    [SerializeField] private float shootingSpeed;
+    [SerializeField] private bool isShooting = false;
+    bool GoBack;
+
     private void Shoot()
     {
         if (isShooting && !GoBack)
@@ -147,6 +139,17 @@ public class PlayerAim : MonoBehaviour
             }
         }
     }
+    #endregion
+
+    #region Detection & Collision
+    [Header("DETECTION & COLLISION")]
+    [SerializeField] private Transform interactor;
+    [SerializeField] private float maxRange;
+    [Space(5)]
+    [SerializeField] private LayerMask _interactable;
+    [SerializeField] private Transform target;
+
+    private Vector3 interactorStartPos;
 
     private bool DetectAt(Vector3 origin, float radius, LayerMask mask)
     {
@@ -181,7 +184,7 @@ public class PlayerAim : MonoBehaviour
         return false;
     }
     
-    private bool DetectBetweencrosshair(Vector3 origin, Vector3 direction)
+    private bool DetectBetweenCrosshair(Vector3 origin, Vector3 direction)
     {
         if (Vector3.Distance(startPoint.position, crosshair.position) < maxRange)
         {
@@ -199,16 +202,18 @@ public class PlayerAim : MonoBehaviour
         }
         return isTargetLocked = false;
     }
+    #endregion
 
+    #region Crosshair & Line Feedback
     private void DrawAimLine(Vector3 endPos)
     {
-        lr.enabled = true;
+        lineRenderer.enabled = true;
 
         interactor.gameObject.SetActive(true);
               
         _startPos = startPoint.position;
         _startPos.z = 0;
-        lr.SetPosition(0, _startPos);
+        lineRenderer.SetPosition(0, _startPos);
 
         if (!isTargetLocked)
         {            
@@ -217,9 +222,9 @@ public class PlayerAim : MonoBehaviour
 
             //change the length of the line renderer
             _endPos = _startPos + (CalculateDirection(_startPos, _endPos) * CalculateLineLength(_startPos, _endPos));
-            lr.SetPosition(1, _endPos);
+            lineRenderer.SetPosition(1, _endPos);
 
-            DetectBetweencrosshair(_startPos, (CalculateDirection(_startPos, _endPos) * CalculateLineLength(_startPos, _endPos)));
+            DetectBetweenCrosshair(_startPos, (CalculateDirection(_startPos, _endPos) * CalculateLineLength(_startPos, _endPos)));
         }
         else
         {
@@ -228,8 +233,9 @@ public class PlayerAim : MonoBehaviour
 
             //change the length of the line renderer
             _endPos = _startPos + (CalculateDirection(_startPos, _endPos) * CalculateLineLength(_startPos, _endPos));
-            lr.SetPosition(1, target.position);
+            lineRenderer.SetPosition(1, target.position);
 
+            MoveCrosshair(target.position);
         }
     }
 
@@ -237,7 +243,8 @@ public class PlayerAim : MonoBehaviour
     {
         crosshair.position = position;
     }
-
+    #endregion
+    
     public Vector3 CalculateDirection(Vector3 _start, Vector3 _end)
     {
         Vector3 _direction = _end - _start;
