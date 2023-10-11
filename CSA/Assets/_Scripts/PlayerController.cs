@@ -4,10 +4,7 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour, IPlayerController {
 
-    public bool canMove = true;
-    public SpriteRenderer sprite;
-    public Material defaultColor;
-    public LayerMask interactable;
+    
 
     public Inventory inventory;
 
@@ -40,17 +37,15 @@ public class PlayerController : MonoBehaviour, IPlayerController {
         // Calculate velocity
         Velocity = (transform.position - _lastPosition) / Time.deltaTime;
         _lastPosition = transform.position;
-        RunCollisionChecks();
-
         GatherInput();
-
-        CalculateWalk(); // Horizontal movement
-        CalculateJump(); // Possibly overrides vertical
+        RunCollisionChecks();
+        CalculateWalk(); // Horizontal movement        
         CalculateGravity(); // Vertical movement
         CalculateJumpApex(); // Affects fall speed, so calculate before gravity
 
         if (canMove)
         {
+            CalculateJump(); // Possibly overrides vertical
             MoveCharacter(); // Actually perform the axis movement
         }
     }
@@ -65,6 +60,7 @@ public class PlayerController : MonoBehaviour, IPlayerController {
 
     #region Gather Input
 
+    private int nClick = 0;
     private void GatherInput()
     {
         Input = new FrameInput
@@ -77,38 +73,28 @@ public class PlayerController : MonoBehaviour, IPlayerController {
             Shoot = UnityEngine.Input.GetButtonDown("Shoot"),
             Cancel = UnityEngine.Input.GetButtonDown("Cancel")
         };
+
         if (Input.JumpDown)
         {
             _lastJumpPressed = Time.time;
         }
 
-        if (Input.AimMode && _currentVerticalSpeed == 0)
+        //Toggle Aim Mode
+        if (Input.AimMode)
         {
-            canMove = false;    
-        }
+            nClick++;
 
-        var hitCollider = Physics2D.OverlapCircle(this.transform.position, 1f, interactable);
-        
-        if (Input.Interact && canMove && hitCollider != null)
-        {
-            var interactable = hitCollider.GetComponent<IInteractable>();
-            var collectable = hitCollider.GetComponent<ICollectable>();
-
-            if (interactable != null)
+            if (nClick == 1 && _currentVerticalSpeed == 0)
             {
-                CheckInteractable(interactable);
+                canMove = false;    
             }
-
-            if (collectable != null)
+            else if (nClick == 2)
             {
-                collectable.Collect(inventory);
+                nClick = 0;
+                canMove = true;
             }
         }
 
-        if (!canMove && Input.AimMode)
-        {
-            canMove = true;
-        }
     }
 
     #endregion
@@ -117,10 +103,10 @@ public class PlayerController : MonoBehaviour, IPlayerController {
 
     [Header("COLLISION")] [SerializeField] private Bounds _characterBounds;
     [SerializeField] private LayerMask _groundLayer;
+    [SerializeField] private LayerMask interactable;
     [SerializeField] private int _detectorCount = 3;
     [SerializeField] private float _detectionRayLength = 0.1f;
     [SerializeField] [Range(0.1f, 0.3f)] private float _rayBuffer = 0.1f; // Prevents side detectors hitting the ground
-
     private RayRange _raysUp, _raysRight, _raysDown, _raysLeft;
     private bool _colUp, _colRight, _colDown, _colLeft;
 
@@ -150,6 +136,25 @@ public class PlayerController : MonoBehaviour, IPlayerController {
         bool RunDetection(RayRange range) {
             return EvaluateRayPositions(range).Any(point => Physics2D.Raycast(point, range.Dir, _detectionRayLength, _groundLayer));
         }
+
+        //Collision with Interactable Object
+        var hitCollider = Physics2D.OverlapCircle(this.transform.position, 1f, interactable);
+        
+        if (Input.Interact && canMove && hitCollider != null)
+        {
+            var interactable = hitCollider.GetComponent<IInteractable>();
+            var collectable = hitCollider.GetComponent<ICollectable>();
+
+            if (interactable != null)
+            {
+                CheckInteractable(interactable);
+            }
+
+            if (collectable != null)
+            {
+                collectable.Collect(inventory);
+            }
+        }         
     }
 
     private void CalculateRayRanged() {
@@ -309,6 +314,7 @@ public class PlayerController : MonoBehaviour, IPlayerController {
 
     [Header("MOVE")] [SerializeField, Tooltip("Raising this value increases collision accuracy at the cost of performance.")]
     private int _freeColliderIterations = 10;
+    public bool canMove = true;
 
     // We cast our bounds before moving to avoid future collisions
     private void MoveCharacter() {
@@ -349,23 +355,27 @@ public class PlayerController : MonoBehaviour, IPlayerController {
     }
 
     #endregion
-    
-    public Vector3 GetPosition()
-    {
-        return transform.position;
-    }
 
+    #region Camouflage
+
+    [Header("CAMOUFLAGE")] [SerializeField] private SpriteRenderer sprite;
+    [SerializeField] private Material defaultColor;
     public void ResetCamouflage()
     {
         sprite.color = defaultColor.color;
         GetComponent<BoxCollider2D>().enabled = true;
     }
-
-
     public void SetNewCamouflage(Color color)
     {
         sprite.color = color;
         GetComponent<BoxCollider2D>().enabled = false;
+    }
+    
+    #endregion
+
+    public Vector3 GetPosition()
+    {
+        return transform.position;
     }
 
     private void OnDrawGizmosSelected()
@@ -373,5 +383,4 @@ public class PlayerController : MonoBehaviour, IPlayerController {
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, 1f);
     }
-
 }
