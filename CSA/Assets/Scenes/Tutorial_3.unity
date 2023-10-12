@@ -36089,7 +36089,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 326194428, guid: 42303504a4fc90a43bc5178df9876bf2, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.63896084
+      value: -0.6407242
       objectReference: {fileID: 0}
     - target: {fileID: 326194428, guid: 42303504a4fc90a43bc5178df9876bf2, type: 3}
       propertyPath: m_LocalPosition.y
@@ -36968,7 +36968,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 518477769}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -9.991038, y: -2.15, z: -10}
+  m_LocalPosition: {x: -9.989275, y: -2.15, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -37165,7 +37165,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -9.991038, y: -2.15, z: -10}
+  m_LocalPosition: {x: -9.989275, y: -2.15, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -40546,7 +40546,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: -0.0037608296, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -40557,7 +40557,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.9373195, y: 1}
   m_EdgeRadius: 0
 --- !u!114 &1133144454
 MonoBehaviour:
@@ -42017,6 +42017,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 59309781190017394, guid: 43af5cf115e34e743890ea5081315f68, type: 3}
+      propertyPath: m_SortingOrder
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 59309781190017395, guid: 43af5cf115e34e743890ea5081315f68, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.22166133
@@ -42027,15 +42031,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 59309781190017395, guid: 43af5cf115e34e743890ea5081315f68, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.5748
+      value: -0.551
       objectReference: {fileID: 0}
     - target: {fileID: 59309781190017395, guid: 43af5cf115e34e743890ea5081315f68, type: 3}
       propertyPath: m_LocalPosition.y
       value: 0.2408
-      objectReference: {fileID: 0}
-    - target: {fileID: 59309783055470160, guid: 43af5cf115e34e743890ea5081315f68, type: 3}
-      propertyPath: destinationPoint
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 59309783055470160, guid: 43af5cf115e34e743890ea5081315f68, type: 3}
       propertyPath: waypoints.Array.size
@@ -42110,8 +42110,20 @@ PrefabInstance:
       value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 59309783055470161, guid: 43af5cf115e34e743890ea5081315f68, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 59309783055470161, guid: 43af5cf115e34e743890ea5081315f68, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 59309783055470161, guid: 43af5cf115e34e743890ea5081315f68, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 59309783055470161, guid: 43af5cf115e34e743890ea5081315f68, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 45.87
+      value: 45.59
       objectReference: {fileID: 0}
     - target: {fileID: 59309783055470161, guid: 43af5cf115e34e743890ea5081315f68, type: 3}
       propertyPath: m_LocalPosition.y
@@ -42644,7 +42656,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 7794771478878850034, guid: 15d5ee56ce0f3d2459e757be43482316, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -17.21
+      value: -17.05
       objectReference: {fileID: 0}
     - target: {fileID: 7794771479247190936, guid: 15d5ee56ce0f3d2459e757be43482316, type: 3}
       propertyPath: m_RootOrder

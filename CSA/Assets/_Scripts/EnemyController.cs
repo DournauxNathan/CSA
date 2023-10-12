@@ -11,9 +11,10 @@ public class EnemyController : MonoBehaviour
     public float enemyWaitTime;
     public bool isMoving = true;
     public int destinationPoint = 0;
-    
+
     [Header("Weakspot")]
     public List<GameButton> weakspots;
+    public List<Transform> points;
     public int weakspotsCount;
 
     [Header("Field Of View Parameters")]
@@ -65,19 +66,21 @@ public class EnemyController : MonoBehaviour
 
         if (Vector3.Distance(transform.position, target.position) < 0.3f)
         {
-            destinationPoint = (destinationPoint + 1) % waypoints.Count;
+            int _destinationPoint = (destinationPoint + 1) % waypoints.Count;
             StartCoroutine(WaitTime());
+            destinationPoint = _destinationPoint;
 
-
-            if (destinationPoint == 0)
+            if (direction == Vector3.right)
             {
                 sprite.flipX = !sprite.flipX;
-                transform.localRotation = Quaternion.Euler(0, 180, 0);
+                weakspots[0].transform.position = points[1].position;
+                //transform.localRotation = Quaternion.Euler(0, 180, 0);
             }
-            else if (destinationPoint > 0)
+            else if (direction == -Vector3.right)
             {
                 sprite.flipX = !sprite.flipX;
-                transform.localRotation = Quaternion.Euler(0, 0, 0);
+                weakspots[0].transform.position = points[0].position;
+
             }
         }
     }

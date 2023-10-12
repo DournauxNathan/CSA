@@ -694,18 +694,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: CoverUp
       objectReference: {fileID: 0}
-    - target: {fileID: 459482560762883477, guid: ccf7e02dab6a819478be9705f85a0815, type: 3}
-      propertyPath: m_Size.x
-      value: 0.9147148
-      objectReference: {fileID: 0}
-    - target: {fileID: 459482560762883477, guid: ccf7e02dab6a819478be9705f85a0815, type: 3}
-      propertyPath: m_Size.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 459482560762883477, guid: ccf7e02dab6a819478be9705f85a0815, type: 3}
-      propertyPath: m_Offset.x
-      value: 0.00387685
-      objectReference: {fileID: 0}
     - target: {fileID: 459482560762883478, guid: ccf7e02dab6a819478be9705f85a0815, type: 3}
       propertyPath: m_RootOrder
       value: 2
