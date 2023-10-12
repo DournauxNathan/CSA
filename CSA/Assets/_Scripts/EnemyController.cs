@@ -126,6 +126,11 @@ public class EnemyController : MonoBehaviour
         }
     }
 
+    public void ToggleFOV(bool value)
+    {
+        fieldOfView.enabled = value;
+    }
+
     public void Alert()
     {
         GameManager.Instance.RestartLevel();

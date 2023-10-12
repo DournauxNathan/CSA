@@ -59,8 +59,6 @@ public class SecurityCamera : Interactable, IInteractable
 
                 if (raycastHit2D.collider != null && raycastHit2D.collider.enabled == true)
                 {
-                    Debug.Log(raycastHit2D.collider.gameObject);
-
                     if (raycastHit2D.collider.gameObject.GetComponent<PlayerController>() != null)
                     {
                         Debug.DrawLine(GetPosition(), player.GetPosition());
@@ -97,7 +95,6 @@ public class SecurityCamera : Interactable, IInteractable
     public void Interact()
     {
         Toogle();
-        Debug.Log("Hey");
     }
 
     public void Timer()
@@ -111,6 +108,7 @@ public class SecurityCamera : Interactable, IInteractable
         {
             isActive = false;
             _anim.enabled = false;
+            fieldOfView.enabled = false;
             fieldOfView.GetComponent<MeshRenderer>().enabled = false;
 
             StartCoroutine(DecreaseTimer());
@@ -120,6 +118,7 @@ public class SecurityCamera : Interactable, IInteractable
         {
             isActive = true;
             _anim.enabled = true;
+            fieldOfView.enabled = true;
             fieldOfView.GetComponent<MeshRenderer>().enabled = true;
 
             onActivate?.Invoke();

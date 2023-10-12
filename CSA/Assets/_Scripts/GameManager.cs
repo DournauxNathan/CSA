@@ -23,6 +23,8 @@ public class GameManager : Singleton<GameManager>
     public void LoadLevel()
     {
         screenFader.StartFadeOut();
+
+        GameManager.Instance.tutoTracker = 0;
         // You might want to delay loading the next scene until the fade out is complete.
         StartCoroutine(LoadNextSceneAfterFade());
     }

@@ -185,7 +185,6 @@ public class PlayerAim : MonoBehaviour
 
         if (hitCollider != null)
         {
-            Debug.Log("Collision detected");
             CheckInteractable(hitCollider);
             isShooting = false;
         }
@@ -205,7 +204,6 @@ public class PlayerAim : MonoBehaviour
         if (interactable != null)
         {
             interactable.Interact();
-            Debug.Log("Interact");
             return true;
         }
         return false;
