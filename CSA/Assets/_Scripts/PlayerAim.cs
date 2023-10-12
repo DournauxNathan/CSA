@@ -38,8 +38,10 @@ public class PlayerAim : MonoBehaviour
             isShooting = true;
             StartCoroutine(Shoot());
         }
-        
-        ToggleAimMode();
+        if (!isShooting)
+        {
+            ToggleAimMode();
+        }
     }
 
     #region Aim

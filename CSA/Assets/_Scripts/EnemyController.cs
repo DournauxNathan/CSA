@@ -129,6 +129,7 @@ public class EnemyController : MonoBehaviour
     public void ToggleFOV(bool value)
     {
         fieldOfView.enabled = value;
+        fieldOfView.GetComponent<MeshRenderer>().enabled = value;
     }
 
     public void Alert()
