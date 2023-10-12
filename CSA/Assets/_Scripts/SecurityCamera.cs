@@ -5,6 +5,7 @@ using UnityEngine;
 public class SecurityCamera : Interactable, IInteractable
 {
     [SerializeField] private Animator _anim;
+    [SerializeField] private AudioSource _audioSource;
 
     [Header("Field Of View Parameters")]
     [SerializeField] private LayerMask layerMask;
@@ -20,6 +21,7 @@ public class SecurityCamera : Interactable, IInteractable
     private void Start()
     {
         Reset();
+        onActivate?.Invoke();
 
         if (player == null) player = GameObject.Find("Player").GetComponent<PlayerController>();
         
@@ -116,7 +118,6 @@ public class SecurityCamera : Interactable, IInteractable
         }
         else if (!isActive)
         {
-            isActive = true;
             _anim.enabled = true;
             fieldOfView.enabled = true;
             fieldOfView.GetComponent<MeshRenderer>().enabled = true;
@@ -128,6 +129,11 @@ public class SecurityCamera : Interactable, IInteractable
     }
 
     #endregion
+
+    public void PlayAudioClip(AudioClip clip)
+    {
+        _audioSource.PlayOneShot(clip);
+    }
 
     public Vector3 GetPosition()
     {

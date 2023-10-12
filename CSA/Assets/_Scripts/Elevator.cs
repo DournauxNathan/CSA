@@ -1,18 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Elevator : MonoBehaviour
 {
     [SerializeField] private float _speed;
     [SerializeField] private Transform[] _points;
 
+    public UnityEvent onStart, onCall, onDelayed;
+    bool doOnce = false;
+    
     private bool _isCalledToPanel = false;
 
-    // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
-        
+        onStart?.Invoke();
     }
 
     // Update is called once per frame
@@ -20,10 +23,17 @@ public class Elevator : MonoBehaviour
     {
         var step = _speed * Time.deltaTime;
         transform.position = Vector3.MoveTowards(transform.position, _isCalledToPanel ? _points[1].position : _points[0].position, step);
+
+        if (transform.position == _points[1].position && !doOnce) 
+        {
+            doOnce = true;
+            onDelayed?.Invoke();
+        }
     }
 
     public void CallElevator()
     {
+        onCall?.Invoke();
         _isCalledToPanel = !_isCalledToPanel;
     }
 
