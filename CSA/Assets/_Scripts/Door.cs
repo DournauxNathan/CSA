@@ -10,7 +10,7 @@ public class Door : MonoBehaviour
     [SerializeField] private Animator _anim;
     private bool isActive = false;
 
-    [SerializeField] private UnityEvent onAnimationOver;
+    [SerializeField] private UnityEvent onOpen, onClose, onAnimationOver;
 
 
     [ContextMenu("Open")]
@@ -22,11 +22,13 @@ public class Door : MonoBehaviour
             {
                 isActive = true;
                 _anim.SetTrigger("Open");
+                onOpen?.Invoke();
             }
             else if (!isActive && !itemNeeded)
             {
                 isActive = true;
                 _anim.SetTrigger("Open");
+                onOpen?.Invoke();
             }
         }
         else
@@ -36,10 +38,18 @@ public class Door : MonoBehaviour
             {
                 isActive = true;
                 _anim.SetTrigger("Open");
+                onOpen?.Invoke();
             }
-        }
-        
+        }        
     }
+
+    public void Close()
+    {
+
+        _anim.SetTrigger("Close");
+        onClose?.Invoke();
+    }
+
 
     // This method can be called by an Animator Event at the end of the animation.
     public void AnimationOver()

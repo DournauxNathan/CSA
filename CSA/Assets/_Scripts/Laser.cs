@@ -5,10 +5,11 @@ using UnityEngine;
 public class Laser : MonoBehaviour
 {
     private LineRenderer lr;
-    public Transform _transform;
+    [SerializeField] private Transform _transform;
 
-    public LayerMask mask;
-    public float distance;
+    [SerializeField] private LayerMask mask;
+    [SerializeField] private float distance;
+
 
     void Start()
     {
@@ -42,6 +43,7 @@ public class Laser : MonoBehaviour
         lr.SetPosition(0, startpos);
         lr.SetPosition(1, endPos);
     }
+
 
     private void OnDrawGizmos()
     {

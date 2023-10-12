@@ -24,7 +24,8 @@ public class Elevator : MonoBehaviour
         var step = _speed * Time.deltaTime;
         transform.position = Vector3.MoveTowards(transform.position, _isCalledToPanel ? _points[1].position : _points[0].position, step);
 
-        if (transform.position == _points[1].position && !doOnce) 
+
+        if ((transform.position == _points[1].position || transform.position == _points[0].position) && !doOnce) 
         {
             doOnce = true;
             onDelayed?.Invoke();
@@ -34,6 +35,7 @@ public class Elevator : MonoBehaviour
     public void CallElevator()
     {
         onCall?.Invoke();
+        doOnce = false;
         _isCalledToPanel = !_isCalledToPanel;
     }
 
