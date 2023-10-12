@@ -84,6 +84,11 @@ public class SecurityCamera : Interactable, IInteractable
     }
 
     #region Interactable interface
+
+    public void Detected()
+    {
+        return;
+    }
     public void Activate()
     {
         isActive = true;

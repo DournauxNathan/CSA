@@ -327,7 +327,7 @@ MonoBehaviour:
     m_Top: 0
     m_Bottom: 0
   m_ChildAlignment: 4
-  m_Spacing: 0
+  m_Spacing: -65
   m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 1
   m_ChildControlWidth: 0
@@ -3236,16 +3236,18 @@ MonoBehaviour:
   image: {fileID: 980641956}
   text: {fileID: 101566755}
   inputsToDisplay:
-  - image: {fileID: 21300000, guid: 24296c4a88ec9464a82e9d12b8354dbf, type: 3}
+  - image: {fileID: 833721627, guid: e741eeb145a404e4ab0eda562b0585ff, type: 3}
     text: '- Jump'
   - image: {fileID: 21300000, guid: 44888644a6ec16b4587632e319fd67ae, type: 3}
     text: Hide yourself from camera !
-  - image: {fileID: 21300000, guid: 8620bcf7fa769e94fa548c2fc0325ef4, type: 3}
-    text: '- Use Object'
-  - image: {fileID: 21300000, guid: 4f85e52bb8c84e649aecf4aeac3d66e9, type: 3}
+  - image: {fileID: 1302248974, guid: e741eeb145a404e4ab0eda562b0585ff, type: 3}
+    text: '- Interact'
+  - image: {fileID: -1029893721, guid: e741eeb145a404e4ab0eda562b0585ff, type: 3}
     text: '- Aim'
-  - image: {fileID: 21300000, guid: 8620bcf7fa769e94fa548c2fc0325ef4, type: 3}
+  - image: {fileID: 1302248974, guid: e741eeb145a404e4ab0eda562b0585ff, type: 3}
     text: '- Shoot'
+  - image: {fileID: 1302248974, guid: e741eeb145a404e4ab0eda562b0585ff, type: 3}
+    text: '- Shoot the weakness to kill enemies !'
 --- !u!1 &8677307497344757993
 GameObject:
   m_ObjectHideFlags: 0

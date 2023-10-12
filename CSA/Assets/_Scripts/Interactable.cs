@@ -11,7 +11,7 @@ public class Interactable : MonoBehaviour
     public PlayerController player;
     public float resetTimer { get; private set; }
 
-    public UnityEvent onInteract, onActivate, onDeactivate, onToggle, onTimerEnd;
+    public UnityEvent onDetect, onInteract, onActivate, onDeactivate, onToggle, onTimerEnd;
 
     public void Reset()
     {

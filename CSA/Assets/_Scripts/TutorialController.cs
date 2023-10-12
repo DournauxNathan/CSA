@@ -23,22 +23,14 @@ public class TutorialController : MonoBehaviour
     public void Show()
     {
         m_Animator.SetTrigger("Show");
-        UpdateTutorialDisplayer();
     }
 
     public void Hide()
     {
         m_Animator.SetTrigger("Hide");
-
-        GameManager.Instance.tutoTracker++;
     }
 
-    public void Reset(int i)
-    {
-        GameManager.Instance.tutoTracker = i;
-    }
-
-    public void UpdateTutorialDisplayer()
+    public void UpdateTutorialDisplayer(int i)
     {
         if (image == null)
         {
@@ -48,10 +40,10 @@ public class TutorialController : MonoBehaviour
         {
             image.CrossFadeAlpha(1, 0.1f, true);
 
-            image.sprite = inputsToDisplay[GameManager.Instance.tutoTracker].image;
+            image.sprite = inputsToDisplay[i].image;
         }
 
-        text.text = inputsToDisplay[GameManager.Instance.tutoTracker].text;
+        text.text = inputsToDisplay[i].text;
     }
 
 }

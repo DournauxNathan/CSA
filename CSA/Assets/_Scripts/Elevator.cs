@@ -9,6 +9,7 @@ public class Elevator : MonoBehaviour
     [SerializeField] private Transform[] _points;
 
     public UnityEvent onStart, onCall, onDelayed;
+
     bool doOnce = false;
     
     private bool _isCalledToPanel = false;
@@ -30,6 +31,11 @@ public class Elevator : MonoBehaviour
             doOnce = true;
             onDelayed?.Invoke();
         }
+    }
+
+    public void SetDoOnce(bool value)
+    {
+        doOnce = value;
     }
 
     public void CallElevator()

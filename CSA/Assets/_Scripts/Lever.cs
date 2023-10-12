@@ -14,6 +14,11 @@ public class Lever : Interactable, IInteractable
         throw new System.NotImplementedException();
     }
 
+    public void Detected()
+    {
+        throw new System.NotImplementedException();
+    }
+
     public void Interact()
     {
         onInteract?.Invoke();

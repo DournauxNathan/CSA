@@ -14,6 +14,11 @@ public class GameButton : Interactable, IInteractable
         throw new System.NotImplementedException();
     }
 
+    public void Detected()
+    {
+        onDetect?.Invoke();
+    }
+
     public void Interact()
     {
         onActivate?.Invoke();

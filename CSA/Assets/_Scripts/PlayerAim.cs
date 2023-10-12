@@ -223,6 +223,8 @@ public class PlayerAim : MonoBehaviour
                 if (hit.collider != null)
                 {
                     LockTarget(hit.transform);
+                    var interactable = hit.collider.GetComponent<IInteractable>();
+                    interactable.Detected();
                     return isTargetLocked = true;
                 }
             }
